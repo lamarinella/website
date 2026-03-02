@@ -225,7 +225,7 @@ const initialLogo = forceDarkText
 
         const updateNavbar = () => {
             const currentScrollY = window.scrollY;
-            const scrolled = currentScrollY > 10;
+            const scrolled = currentScrollY > 50; // Increased threshold to stop flickering
             const isDark = document.documentElement.classList.contains("dark");
 
             // Close dropdown if open when scrolling
@@ -237,10 +237,10 @@ const initialLogo = forceDarkText
                 toggleDropdown(false);
             }
 
-            // Style changes based on scroll position
+            // Style changes based on scroll position - simplified and robust
             if (scrolled) {
                 navbar.classList.add(
-                    "bg-(--color-menu-container)", // updated to match menu container background
+                    "bg-(--color-menu-container)",
                     "backdrop-blur-xl",
                     "shadow-sm",
                     "border-b",
@@ -260,7 +260,7 @@ const initialLogo = forceDarkText
 
             updateLogoBasedOnTheme();
 
-            // Handle Text Color based on Dark mode (ignoring forceDark logic now since background is solid)
+            // Handle Text Color based on Dark mode safely
             const controls = [dropdownBtn, themeToggleBtn];
 
             if (isDark) {

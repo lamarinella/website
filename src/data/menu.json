@@ -149,15 +149,13 @@
           "name": "Caprese",
           "description": "Pomodoro, lattuga, mozzarella",
           "descriptionEn": "Tomato, lettuce, mozzarella",
-          "price": "€4.00",
-          "image": "/images/menu/panini.jpg"
+          "price": "€4.00"
         },
         {
           "name": "Marinella",
           "description": "Prosciutto cotto, provola, lattuga, pomodoro",
           "descriptionEn": "Cooked ham, provola cheese, lettuce, tomato",
-          "price": "€4.50",
-          "image": "/images/pasticceria-img/2.avif"
+          "price": "€4.50"
         },
         {
           "name": "Sfizioso",
@@ -208,8 +206,7 @@
         {
           "name": "Acqua 50cl",
           "nameEn": "Water 50cl",
-          "price": "€1.00",
-          "image": "/images/menu/caffetteria.jpg"
+          "price": "€1.00"
         },
         {
           "name": "Acqua 150cl",
@@ -218,8 +215,7 @@
         },
         {
           "name": "Coca Cola",
-          "price": "€2.00",
-          "image": "/images/menu/bibite.jpg"
+          "price": "€2.00"
         },
         {
           "name": "Fanta",

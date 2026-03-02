@@ -8,12 +8,14 @@ interface Props {
   title?: string;
   description?: string;
   lang?: string;
+  showPrivacyManager?: boolean;
 }
 
 const {
   title = "La Marinella - Gelateria Pasticceria Artigianale",
   description = "Dal 2006 creiamo gelati e dolci artigianali con passione. Tradizione, qualità e sapori autentici.",
   lang = "it",
+  showPrivacyManager = true,
 } = Astro.props;
 ---
 
@@ -24,23 +26,33 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/brand assets/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/brand assets/favicon.svg" />
     <title>{title}</title>
     <!-- Dark Mode Init -->
     <script is:inline>
-      if (
-        localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
+      function initTheme() {
+        const isMenuPage = window.location.pathname.startsWith("/menu");
+        if (
+          isMenuPage &&
+          (localStorage.theme === "dark" ||
+            (!("theme" in localStorage) &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches))
+        ) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
       }
+
+      initTheme();
+      document.addEventListener("astro:after-swap", initTheme);
+      document.addEventListener("astro:page-load", initTheme);
     </script>
   </head>
-  <body class="overflow-x-hidden bg-text">
+  <body
+    class="overflow-x-hidden bg-background text-text transition-colors duration-500"
+  >
     <div
       id="page-content"
       class="min-h-screen transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
@@ -49,9 +61,14 @@ const {
     </div>
     <MobileMenu />
     <SmoothScroll />
-    <script
-      type="text/javascript"
-      src="https://embeds.iubenda.com/widgets/2be2277d-f6b0-4a76-850e-36cfb3b9d241.js"
-      async></script>
+    {
+      showPrivacyManager && (
+        <script
+          type="text/javascript"
+          src="https://embeds.iubenda.com/widgets/2be2277d-f6b0-4a76-850e-36cfb3b9d241.js"
+          async
+        />
+      )
+    }
   </body>
 </html>
