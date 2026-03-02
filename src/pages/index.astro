@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navigation from "../components/Navigation.astro";
+import Hero from "../components/Hero.astro";
+import SpecialitiesSection from "../components/SpecialitiesSection.astro";
+import Features from "../components/Features.astro";
+import LocationSection from "../components/LocationSection.astro";
+import GallerySection from "../components/GallerySection.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="La Marinella | Gelateria e Pasticceria Artigianale a Zambrone"
+  description="Dal 2006 creiamo gelato fresco e dolci della tradizione a Zambrone Marina. Ingredienti eccellenti, passione artigianale e sapore inconfondibile. Scopri il menu!"
+>
+  <Navigation />
+  <main>
+    <Hero />
+    <SpecialitiesSection />
+    <Features />
+    <LocationSection />
+    <GallerySection />
+  </main>
+  <Footer />
+</BaseLayout>

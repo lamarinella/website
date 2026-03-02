@@ -1,0 +1,146 @@
+---
+import FeatureCard from "./FeatureCard";
+
+const features = [
+  {
+    title: "Ingredienti di Prima Qualità",
+    description:
+      "Selezioniamo con cura materie prime eccellenti: dal pistacchio di Bronte alla nocciola del Piemonte, ogni ingrediente racconta una storia di qualità e territorio.",
+    icon: "quality" as const,
+  },
+  {
+    title: "Lavorazione Artigianale",
+    description:
+      "Ogni prodotto è realizzato a mano seguendo ricette tradizionali tramandate nel tempo, con tecniche che rispettano i tempi naturali della lavorazione.",
+    icon: "craft" as const,
+  },
+  {
+    title: "Passione e Dedizione",
+    description:
+      "Dal 2006 mettiamo il cuore in ogni creazione, combinando esperienza e innovazione per offrire sapori autentici che emozionano.",
+    icon: "passion" as const,
+  },
+];
+---
+
+<section
+  class="section-padding bg-linear-to-b from-white to-[rgb(250,248,245)] relative overflow-hidden"
+>
+  <!-- Pattern background -->
+  <div
+    class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.015]"
+  >
+    <img
+      src="/brand assets/pattern chamoisee.svg"
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <!-- Background decorative elements -->
+  <div
+    class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.02]"
+  >
+    <div
+      class="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] rounded-full bg-[rgb(123,123,84)]"
+    >
+    </div>
+    <div
+      class="absolute -bottom-1/2 -left-1/4 w-[600px] h-[600px] rounded-full bg-[rgb(185,140,75)]"
+    >
+    </div>
+  </div>
+
+  <div class="container-custom relative">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16 lg:mb-20 features-header">
+      <h2 class="text-4xl md:text-5xl lg:text-6xl mb-6 font-serif">
+        La Nostra <span class="italic text-[rgb(185,140,75)]">Filosofia</span>
+      </h2>
+      <p class="text-lg md:text-xl text-[rgb(12,12,12)]/70 leading-relaxed">
+        Tre pilastri che guidano ogni nostro prodotto
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="grid lg:grid-cols-3 gap-8 lg:gap-12 max-w-7xl mx-auto">
+      {
+        features.map((feature, index) => (
+          <FeatureCard
+            client:only="react"
+            title={feature.title}
+            description={feature.description}
+            icon={feature.icon}
+            index={index}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Initial state - hidden */
+  .features-header,
+  .feature-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
+  }
+
+  /* Animated state */
+  .features-header.animated,
+  .feature-card.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animated");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    },
+  );
+
+  // Observe header
+  const header = document.querySelector(".features-header");
+  if (header) {
+    observer.observe(header);
+  }
+
+  // Observe feature cards with stagger
+  const cards = document.querySelectorAll(".feature-card");
+  cards.forEach((card, index) => {
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add("animated");
+            }, index * 150);
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      },
+    );
+
+    cardObserver.observe(card);
+  });
+</script>

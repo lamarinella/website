@@ -1,0 +1,14 @@
+
+sfondi #F8F7F7
+
+
+testi ed elementi scuri #0C0C0C
+
+
+crema #F1E2C3
+
+
+accent #A67A46
+
+
+verde #7B7B54

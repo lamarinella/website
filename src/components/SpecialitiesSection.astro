@@ -1,0 +1,309 @@
+---
+
+---
+
+<section
+  class="py-0 lg:py-24 xl:py-32 bg-white overflow-x-clip"
+  id="specialities-section"
+>
+  <!-- Desktop: Two Column Grid with Title in Center -->
+  <div
+    class="hidden lg:block w-full max-w-[1400px] mx-auto px-8 xl:px-12 2xl:px-16"
+  >
+    <div
+      class="grid grid-cols-2 gap-4 lg:gap-8 items-center cards-container relative"
+      id="cards-container"
+    >
+      <!-- Pasticceria Card -->
+      <a
+        href="/pasticceria"
+        class="group relative overflow-hidden hover:shadow-2xl transition-all duration-700 card-left"
+      >
+        <div class="relative aspect-3/4 overflow-hidden">
+          <img
+            src="/images/pasticceria-img.avif"
+            alt="Pasticceria Artigianale"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <!-- Elegant Overlay -->
+          <div
+            class="absolute inset-0 bg-linear-to-t from-[rgb(12,12,12)]/80 via-[rgb(12,12,12)]/20 to-transparent"
+          >
+          </div>
+
+          <!-- Content -->
+          <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+            <h3 class="text-3xl md:text-4xl font-serif text-white">
+              Pasticceria
+            </h3>
+          </div>
+        </div>
+      </a>
+
+      <!-- Gelateria Card -->
+      <a
+        href="/gelateria"
+        class="group relative overflow-hidden hover:shadow-2xl transition-all duration-700 card-right"
+      >
+        <div class="relative aspect-3/4 overflow-hidden">
+          <img
+            src="/images/gelateria-img.avif"
+            alt="Gelateria Artigianale"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <!-- Elegant Overlay -->
+          <div
+            class="absolute inset-0 bg-linear-to-t from-[rgb(12,12,12)]/80 via-[rgb(12,12,12)]/20 to-transparent"
+          >
+          </div>
+
+          <!-- Content -->
+          <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+            <h3 class="text-3xl md:text-4xl font-serif text-white">
+              Gelateria
+            </h3>
+          </div>
+        </div>
+      </a>
+
+      <!-- Section Title in Center (Desktop Only) - Appears on scroll -->
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none title-center opacity-0"
+      >
+        <h2
+          class="text-4xl xl:text-5xl 2xl:text-6xl font-serif text-[rgb(12,12,12)] whitespace-nowrap writing-mode-vertical"
+        >
+          Le Nostre <span class="italic text-[rgb(185,140,75)]">Specialità</span
+          >
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile: Full Width Cards with Header -->
+  <div class="lg:hidden">
+    <!-- Mobile Section Header -->
+    <div class="text-center py-20 px-6 mobile-header-animate">
+      <h2 class="text-4xl md:text-5xl font-serif text-[rgb(12,12,12)] mb-4">
+        Le Nostre <span class="italic text-[rgb(185,140,75)]">Specialità</span>
+      </h2>
+      <p class="text-lg text-[rgb(12,12,12)]/70 max-w-2xl mx-auto">
+        Gelato e pasticceria artigianale, due mondi di sapori autentici
+      </p>
+    </div>
+
+    <!-- Mobile Cards - Full Width -->
+    <div class="space-y-0">
+      <!-- Pasticceria Card Mobile -->
+      <a
+        href="/pasticceria"
+        class="group block relative overflow-hidden mobile-card-animate"
+        data-index="0"
+      >
+        <div class="relative aspect-4/3">
+          <img
+            src="/images/pasticceria-img.avif"
+            alt="Pasticceria Artigianale"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-[rgb(12,12,12)]/80 via-[rgb(12,12,12)]/20 to-transparent"
+          >
+          </div>
+          <div class="absolute inset-0 flex flex-col justify-end p-8">
+            <h3 class="text-3xl md:text-4xl font-serif text-white">
+              Pasticceria
+            </h3>
+          </div>
+        </div>
+      </a>
+
+      <!-- Gelateria Card Mobile -->
+      <a
+        href="/gelateria"
+        class="group block relative overflow-hidden mobile-card-animate"
+        data-index="1"
+      >
+        <div class="relative aspect-4/3">
+          <img
+            src="/images/gelateria-img.avif"
+            alt="Gelateria Artigianale"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-[rgb(12,12,12)]/80 via-[rgb(12,12,12)]/20 to-transparent"
+          >
+          </div>
+          <div class="absolute inset-0 flex flex-col justify-end p-8">
+            <h3 class="text-3xl md:text-4xl font-serif text-white">
+              Gelateria
+            </h3>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .writing-mode-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* Cards start together */
+  .card-left,
+  .card-right {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Title hidden initially */
+  .title-center {
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* When scrolled into view, cards separate */
+  .cards-container.separated .card-left {
+    transform: translateX(-3rem);
+  }
+
+  .cards-container.separated .card-right {
+    transform: translateX(3rem);
+  }
+
+  .cards-container.separated .title-center {
+    opacity: 1;
+  }
+
+  @media (min-width: 1280px) {
+    .cards-container.separated .card-left {
+      transform: translateX(-4rem);
+    }
+
+    .cards-container.separated .card-right {
+      transform: translateX(4rem);
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .cards-container.separated .card-left {
+      transform: translateX(-5rem);
+    }
+
+    .cards-container.separated .card-right {
+      transform: translateX(5rem);
+    }
+  }
+
+  /* Mobile fade in animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Mobile animations */
+  .mobile-header-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
+  }
+
+  .mobile-header-animate.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-card-animate {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+      opacity 0.7s ease-out,
+      transform 0.7s ease-out;
+  }
+
+  .mobile-card-animate.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  // Desktop: Scroll-triggered animation for cards separation
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const container = entry.target as HTMLElement;
+          // Add separated class when scrolled into view
+          setTimeout(() => {
+            container.classList.add("separated");
+          }, 100);
+        }
+      });
+    },
+    {
+      threshold: 0.3, // Trigger when 30% of the section is visible
+      rootMargin: "0px",
+    },
+  );
+
+  // Observe the cards container (desktop only)
+  const cardsContainer = document.getElementById("cards-container");
+  if (cardsContainer) {
+    observer.observe(cardsContainer);
+  }
+
+  // Mobile: Scroll-triggered animations
+  const mobileObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const element = entry.target as HTMLElement;
+          element.classList.add("animated");
+          mobileObserver.unobserve(element);
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+      rootMargin: "0px 0px -50px 0px",
+    },
+  );
+
+  // Observe mobile header
+  const mobileHeader = document.querySelector(".mobile-header-animate");
+  if (mobileHeader) {
+    mobileObserver.observe(mobileHeader);
+  }
+
+  // Observe mobile cards with stagger effect
+  const mobileCards = document.querySelectorAll(".mobile-card-animate");
+  mobileCards.forEach((card, index) => {
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              (entry.target as HTMLElement).classList.add("animated");
+            }, index * 200); // 200ms delay between cards
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -100px 0px",
+      },
+    );
+
+    cardObserver.observe(card);
+  });
+</script>

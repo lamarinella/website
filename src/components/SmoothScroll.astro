@@ -1,0 +1,27 @@
+<script>
+    import Lenis from "lenis";
+
+    // Initialize Lenis
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Integrate with Astro View Transitions (if used later)
+    document.addEventListener("astro:page-load", () => {
+        // Re-initialize if necessary or handle page transitions
+        // For now, the global instance should persist or we might need to reset scroll
+    });
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gelaterialamarinella.it/sitemap-index.xml

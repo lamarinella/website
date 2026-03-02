@@ -1,0 +1,173 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/pasticceria", label: "Pasticceria" },
+  { href: "/gelateria", label: "Gelateria" },
+  { href: "/menu", label: "Menu" },
+  { href: "/contatti", label: "Contatti" },
+];
+---
+
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-1000 transition-all duration-500"
+>
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-4 md:py-6">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="h-5 md:h-7 transition-all duration-500 hover:opacity-60 z-10"
+      >
+        <img
+          id="logo"
+          src="/brand assets/Logotipo Duch White.svg"
+          alt="La Marinella"
+          class="h-full w-auto transition-all duration-500"
+        />
+      </a>
+
+      <!-- Desktop & Tablet Navigation -->
+      <ul
+        class="hidden md:flex items-center gap-6 md:gap-8 lg:gap-10 xl:gap-12"
+      >
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class={`
+                nav-link
+                text-[0.75rem] md:text-[0.8125rem] font-light tracking-[0.15em] uppercase
+                relative py-2 transition-all duration-500
+                text-white
+                after:absolute after:bottom-0 after:left-0 after:right-0
+                after:h-px after:bg-accent after:origin-left
+                after:transition-transform after:duration-500 after:ease-out
+                ${currentPath === link.href ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100"}
+              `}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <!-- Mobile Menu -->
+      <!-- Mobile Menu Trigger -->
+      <button
+        id="mobile-menu-trigger"
+        class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 z-50 text-white"
+        aria-label="Apri menu"
+      >
+        <span class="w-6 h-0.5 bg-current transition-all duration-300"></span>
+        <span class="w-6 h-0.5 bg-current transition-all duration-300"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Navbar scroll effect with auto-hide
+  const navbar = document.getElementById("navbar");
+  const logo = document.getElementById("logo");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  function updateNavbar() {
+    const currentScrollY = window.scrollY;
+    const scrolled = currentScrollY > 100;
+    const scrollingDown = currentScrollY > lastScrollY;
+    const scrollingUp = currentScrollY < lastScrollY;
+
+    // Hide navbar when scrolling down, show when scrolling up
+    if (scrollingDown && currentScrollY > 150) {
+      navbar?.style.setProperty("transform", "translateY(-100%)");
+    } else if (scrollingUp || currentScrollY <= 100) {
+      navbar?.style.setProperty("transform", "translateY(0)");
+    }
+
+    // Style changes based on scroll position
+    if (scrolled) {
+      // Scrolled state - light glass background, dark text
+      navbar?.classList.add(
+        "bg-white/80",
+        "backdrop-blur-xl",
+        "shadow-sm",
+        "border-b",
+        "border-[rgb(12,12,12)]/8",
+      );
+      navbar?.classList.remove("bg-transparent");
+      logo?.setAttribute("src", "/brand assets/Logotipo black.svg");
+
+      navLinks.forEach((link) => {
+        link.classList.remove("text-white");
+        link.classList.add("text-[rgb(12,12,12)]");
+      });
+      // Update hamburger color
+      const trigger = document.getElementById("mobile-menu-trigger");
+      trigger?.classList.remove("text-white");
+      trigger?.classList.add("text-[rgb(12,12,12)]");
+    } else {
+      // Top state - transparent, white text
+      navbar?.classList.remove(
+        "bg-white/80",
+        "backdrop-blur-xl",
+        "shadow-sm",
+        "border-b",
+        "border-[rgb(12,12,12)]/8",
+      );
+      navbar?.classList.add("bg-transparent");
+      logo?.setAttribute("src", "/brand assets/Logotipo Duch White.svg");
+
+      navLinks.forEach((link) => {
+        link.classList.remove("text-[rgb(12,12,12)]");
+        link.classList.add("text-white");
+      });
+
+      // Update hamburger color
+      const trigger = document.getElementById("mobile-menu-trigger");
+      trigger?.classList.remove("text-[rgb(12,12,12)]");
+      trigger?.classList.add("text-white");
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+
+  // Initial check
+  updateNavbar();
+
+  // Listen to scroll with throttling for better performance
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateNavbar();
+        });
+        ticking = true;
+      }
+    },
+    { passive: true },
+  );
+
+  // Mobile Menu Trigger Logic
+  function initTrigger() {
+    const trigger = document.getElementById("mobile-menu-trigger");
+    if (trigger) {
+      trigger.addEventListener("click", () => {
+        window.dispatchEvent(new CustomEvent("mobile-menu-open"));
+      });
+    }
+  }
+
+  // Re-run on navigation
+  initTrigger();
+  document.addEventListener("astro:after-swap", initTrigger);
+</script>

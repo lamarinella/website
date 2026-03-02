@@ -1,0 +1,57 @@
+---
+import "../styles/global.css";
+
+import MobileMenu from "../components/MobileMenu.astro";
+import SmoothScroll from "../components/SmoothScroll.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title = "La Marinella - Gelateria Pasticceria Artigianale",
+  description = "Dal 2006 creiamo gelati e dolci artigianali con passione. Tradizione, qualità e sapori autentici.",
+  lang = "it",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <!-- Dark Mode Init -->
+    <script is:inline>
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body class="overflow-x-hidden bg-text">
+    <div
+      id="page-content"
+      class="min-h-screen transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+    >
+      <slot />
+    </div>
+    <MobileMenu />
+    <SmoothScroll />
+    <script
+      type="text/javascript"
+      src="https://embeds.iubenda.com/widgets/2be2277d-f6b0-4a76-850e-36cfb3b9d241.js"
+      async></script>
+  </body>
+</html>

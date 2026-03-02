@@ -1,0 +1,199 @@
+---
+const prodotti = [
+  {
+    name: "Gelato Artigianale",
+    description:
+      "Cremoso e intenso, preparato quotidianamente con latte fresco e ingredienti naturali. Oltre 30 gusti tra classici e ricercati.",
+    image: null,
+    category: "Gelato",
+  },
+  {
+    name: "Colomba al Pistacchio",
+    description:
+      "La nostra specialità pasquale: soffice impasto con pistacchi di Bronte DOP e glassa artigianale. Un'esperienza unica.",
+    image: "/images/colomba-pistacchio.avif",
+    category: "Pasticceria",
+  },
+  {
+    name: "Cantucci Toscani",
+    description:
+      "Croccanti biscotti alle mandorle secondo la tradizione toscana. Perfetti da inzuppare nel vin santo.",
+    image: "/images/cantucci.png",
+    category: "Biscotteria",
+  },
+  {
+    name: "Pasticceria Fresca",
+    description:
+      "Ogni giorno proponiamo una selezione di paste fresche, crostate, millefoglie e torte preparate al momento.",
+    image: "/images/biscotti.png",
+    category: "Pasticceria",
+  },
+];
+---
+
+<section id="prodotti" class="prodotti section">
+  <div class="container">
+    <div class="section-header">
+      <h2>I Nostri Prodotti</h2>
+      <p class="section-subtitle">
+        Ogni creazione nasce dall'incontro tra tradizione artigianale e ricerca
+        della qualità. Scopri il nostro mondo di sapori autentici.
+      </p>
+    </div>
+
+    <div class="prodotti-grid">
+      {
+        prodotti.map((prodotto, index) => (
+          <article class={`prodotto-card ${index % 2 === 0 ? "even" : "odd"}`}>
+            {prodotto.image && (
+              <div class="prodotto-image">
+                <img src={prodotto.image} alt={prodotto.name} />
+              </div>
+            )}
+            <div class="prodotto-content">
+              <span class="prodotto-category">{prodotto.category}</span>
+              <h3 class="prodotto-name">{prodotto.name}</h3>
+              <p class="prodotto-description">{prodotto.description}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="prodotti-cta">
+      <p class="cta-text">
+        Vieni a trovarci per scoprire tutte le nostre specialità
+      </p>
+      <a href="#contatti" class="btn btn-primary">Dove siamo</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .prodotti {
+    background: white;
+    position: relative;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .section-subtitle {
+    color: rgba(12, 12, 12, 0.6);
+    line-height: 1.8;
+  }
+
+  .prodotti-grid {
+    display: grid;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .prodotto-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .prodotto-card.odd {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .prodotto-card.even .prodotto-image {
+    order: 2;
+  }
+
+  .prodotto-card:hover {
+    background: var(--color-background);
+  }
+
+  .prodotto-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .prodotto-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+  }
+
+  .prodotto-card:hover .prodotto-image img {
+    transform: scale(1.05);
+  }
+
+  .prodotto-content {
+    padding: var(--spacing-md);
+  }
+
+  .prodotto-category {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+  }
+
+  .prodotto-name {
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+
+  .prodotto-description {
+    color: rgba(12, 12, 12, 0.7);
+    line-height: 1.8;
+  }
+
+  .prodotti-cta {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    background: var(--color-cream);
+    border-radius: 4px;
+  }
+
+  .cta-text {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+  }
+
+  @media (max-width: 1024px) {
+    .prodotto-card,
+    .prodotto-card.odd,
+    .prodotto-card.even {
+      grid-template-columns: 1fr;
+    }
+
+    .prodotto-card.even .prodotto-image {
+      order: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .prodotti-grid {
+      gap: var(--spacing-lg);
+    }
+
+    .prodotto-card {
+      padding: 0;
+    }
+
+    .prodotto-content {
+      padding: var(--spacing-md) 0;
+    }
+  }
+</style>

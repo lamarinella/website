@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MenuNavbar from "../components/MenuNavbar.astro";
+import menuData from "../data/menu.json";
+import MenuGrid from "../components/MenuGrid.astro";
+
+const menuCategories = menuData.categories as any[];
+---
+
+<BaseLayout
+  title="Menu | La Marinella"
+  description="Il nostro menu completo: gelateria, caffetteria, tavola calda e aperitivi."
+>
+  <MenuNavbar lang="it" forceDarkText={true} />
+
+  <MenuGrid menuCategories={menuCategories} lang="it" />
+</BaseLayout>

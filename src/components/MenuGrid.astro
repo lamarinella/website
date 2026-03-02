@@ -1,0 +1,434 @@
+---
+import { Image } from "astro:assets";
+
+interface MenuItem {
+    name: string;
+    nameEn?: string;
+    description?: string;
+    descriptionEn?: string;
+    price: string;
+    image?: string;
+}
+
+interface Subcategory {
+    title: string;
+    titleEn?: string;
+    priceHeader?: string;
+    priceHeaderEn?: string;
+    items: MenuItem[];
+}
+
+interface Category {
+    id: string;
+    title: string;
+    titleEn?: string;
+    icon?: string;
+    style?: string;
+    backgroundImage?: string;
+    special?: boolean;
+    subcategories?: Subcategory[];
+    items?: MenuItem[];
+}
+
+interface Props {
+    menuCategories: Category[];
+    lang: "it" | "en";
+}
+
+const { menuCategories, lang } = Astro.props;
+
+// Helper to get localized string
+const getLocal = (itStr: string, enStr?: string) =>
+    lang === "en" && enStr ? enStr : itStr;
+---
+
+<!-- Top Navigation (Horizontal Scroll Cards) -->
+<div
+    class="fixed top-[72px] md:top-[88px] left-0 right-0 w-full z-40 bg-(--color-menu-container)/95 backdrop-blur-md border-b border-(--color-card-border) py-1 shadow-sm transition-colors duration-500"
+    id="top-nav"
+>
+    <div class="flex overflow-x-auto px-4 md:px-8 no-scrollbar items-center">
+        {
+            menuCategories.map((cat) => (
+                <a
+                    href={`#category-${cat.id}`}
+                    class="nav-tab shrink-0 px-5 md:px-6 py-4 uppercase tracking-widest text-[0.65rem] md:text-[0.75rem] font-light md:font-medium text-text/80 hover:text-text relative transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-accent after:origin-left after:transition-transform after:duration-500 after:ease-out after:scale-x-0 hover:after:scale-x-100"
+                >
+                    {getLocal(cat.title, cat.titleEn)}
+                </a>
+            ))
+        }
+    </div>
+</div>
+
+<main class="bg-(--color-menu-container) pb-32 transition-colors duration-500">
+    <!-- Hero Header -->
+    <header
+        class="pt-[160px] md:pt-[180px] pb-16 md:pb-24 text-center px-4 relative overflow-hidden"
+    >
+        <!-- Background Pattern -->
+        <div
+            class="absolute inset-0 opacity-[0.03] dark:opacity-[0.015] pointer-events-none"
+            style="background-image: url('/brand assets/pattern chamoisee.svg'); background-size: 600px;"
+        >
+        </div>
+        <div
+            class="z-10 hidden dark:block absolute inset-0 bg-background/50 pointer-events-none"
+        >
+        </div>
+        <div class="relative z-20">
+            <h1
+                class="text-5xl md:text-7xl font-display font-medium mb-4 animate-fade-in-up"
+            >
+                {lang === "it" ? "Il Nostro " : "Our "}
+                <span class="text-accent italic font-serif">Menu</span>
+            </h1>
+            <p
+                class="text-text/60 max-w-lg mx-auto animate-fade-in-up [animation-delay:100ms] text-lg"
+            >
+                {
+                    lang === "it"
+                        ? "Esplora le nostre specialità in un'interfaccia pensata per farti venire l'acquolina in bocca."
+                        : "Explore our specialties in an interface designed to make your mouth water."
+                }
+            </p>
+            <div
+                class="animate-fade-in-up [animation-delay:200ms] text-center text-text/60 mt-8 px-4"
+            >
+                <span
+                    class="text-[0.65rem] md:text-xs uppercase tracking-widest font-medium"
+                >
+                    {
+                        lang === "it"
+                            ? "Per allergie o intolleranze, avvisa il personale"
+                            : "For allergies or intolerances, please ask the staff"
+                    }
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-custom">
+        <div class="flex flex-col gap-20 max-w-5xl mx-auto">
+            {
+                menuCategories.map((category) => (
+                    <section
+                        id={`category-${category.id}`}
+                        class="menu-section-preview scroll-mt-[150px] md:scroll-mt-[170px]"
+                    >
+                        <div class="mb-10 flex items-center justify-between border-b border-(--color-card-border) pb-4">
+                            <h2 class="text-4xl md:text-5xl font-display font-medium text-text">
+                                {getLocal(category.title, category.titleEn)}
+                            </h2>
+                            {category.special && (
+                                <span class="bg-accent/10 text-accent px-3 py-1 text-xs font-bold uppercase rounded-full tracking-wider">
+                                    {lang === "it"
+                                        ? "Scelta Top"
+                                        : "Top Choice"}
+                                </span>
+                            )}
+                        </div>
+
+                        {category.subcategories ? (
+                            <div class="flex flex-col gap-12">
+                                {category.subcategories.map((sub) => (
+                                    <div>
+                                        <h3 class="text-2xl font-serif text-accent mb-6 flex items-center gap-4">
+                                            {getLocal(sub.title, sub.titleEn)}
+                                            {sub.priceHeader && (
+                                                <span class="text-xs text-text/50 uppercase tracking-widest font-sans ml-auto">
+                                                    {getLocal(
+                                                        sub.priceHeader,
+                                                        sub.priceHeaderEn,
+                                                    )}
+                                                </span>
+                                            )}
+                                        </h3>
+
+                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
+                                            {sub.items.map((item, index) => {
+                                                const hasImage = !!item.image;
+                                                const needsPlaceholder =
+                                                    category.id === "panini" &&
+                                                    !hasImage;
+
+                                                return (
+                                                    <div
+                                                        class={`group relative flex flex-col py-6 md:py-8 transition-colors duration-500 hover:bg-black/5 dark:hover:bg-white/5 ${index !== sub.items.length - 1 ? "border-b border-(--color-card-border)" : ""}`}
+                                                    >
+                                                        {/* Layout A: Large Square Image at the top for specific categories */}
+                                                        {[
+                                                            "panini",
+                                                            "dolci",
+                                                            "gelateria",
+                                                        ].includes(
+                                                            category.id,
+                                                        ) ? (
+                                                            hasImage ? (
+                                                                <div class="relative w-full aspect-square overflow-hidden mb-6 bg-(--color-menu-container)">
+                                                                    <img
+                                                                        src={
+                                                                            item.image
+                                                                        }
+                                                                        alt={getLocal(
+                                                                            item.name,
+                                                                            item.nameEn,
+                                                                        )}
+                                                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                                        loading="lazy"
+                                                                    />
+                                                                </div>
+                                                            ) : needsPlaceholder ? (
+                                                                <div class="relative w-full aspect-square overflow-hidden mb-6 bg-background flex items-center justify-center group-hover:bg-cream/5 transition-colors duration-700">
+                                                                    <div
+                                                                        class="absolute inset-0 opacity-10 dark:opacity-5 mix-blend-multiply dark:mix-blend-screen pointer-events-none transition-transform duration-1000 group-hover:scale-110"
+                                                                        style="background-image: url('/brand assets/pattern chamoisee.svg'); background-size: 300px;"
+                                                                    />
+                                                                    <img
+                                                                        src="/brand assets/Logotipo black.svg"
+                                                                        alt="La Marinella"
+                                                                        class="w-1/3 max-w-[150px] opacity-40 dark:hidden z-10"
+                                                                    />
+                                                                    <img
+                                                                        src="/brand assets/Logotipo Duch White.svg"
+                                                                        alt="La Marinella"
+                                                                        class="w-1/3 max-w-[150px] opacity-40 hidden dark:block z-10"
+                                                                    />
+                                                                </div>
+                                                            ) : null
+                                                        ) : null}
+
+                                                        {/* Container for content and optional Layout B image */}
+                                                        <div class="relative z-10 px-4 md:px-6 mb-2 flex flex-row gap-5 md:gap-8 items-start">
+                                                            {/* Layout B: Small Image on the left for all other categories */}
+                                                            {![
+                                                                "panini",
+                                                                "dolci",
+                                                                "gelateria",
+                                                            ].includes(
+                                                                category.id,
+                                                            ) &&
+                                                                hasImage && (
+                                                                    <div class="shrink-0 w-20 h-20 md:w-28 md:h-28 overflow-hidden bg-background">
+                                                                        <img
+                                                                            src={
+                                                                                item.image
+                                                                            }
+                                                                            alt={getLocal(
+                                                                                item.name,
+                                                                                item.nameEn,
+                                                                            )}
+                                                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                                            loading="lazy"
+                                                                        />
+                                                                    </div>
+                                                                )}
+
+                                                            {/* Content Section */}
+                                                            <div class="flex flex-col justify-start grow">
+                                                                <div class="flex justify-between items-baseline gap-4 mb-2">
+                                                                    <h4 class="font-display font-medium text-xl md:text-2xl leading-tight text-text group-hover:text-accent transition-colors">
+                                                                        {getLocal(
+                                                                            item.name,
+                                                                            item.nameEn,
+                                                                        )}
+                                                                    </h4>
+                                                                    <div class="grow border-b border-dotted border-(--color-card-border) mx-4 relative top-[-6px] hidden sm:block" />
+                                                                    <span class="font-display font-medium text-xl md:text-2xl text-accent shrink-0">
+                                                                        {
+                                                                            item.price
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                                {(item.description ||
+                                                                    item.descriptionEn) && (
+                                                                    <p class="text-text/70 text-sm md:text-base font-light leading-relaxed max-w-2xl mt-1">
+                                                                        {getLocal(
+                                                                            item.description!,
+                                                                            item.descriptionEn,
+                                                                        )}
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
+                                {category.items?.map((item, index) => {
+                                    const hasImage = !!item.image;
+                                    const needsPlaceholder =
+                                        category.id === "panini" && !hasImage;
+
+                                    return (
+                                        <div
+                                            class={`group relative flex flex-col py-6 md:py-8 transition-colors duration-500 hover:bg-black/5 dark:hover:bg-white/5 ${index !== (category.items?.length || 0) - 1 ? "border-b border-(--color-card-border)" : ""}`}
+                                        >
+                                            {/* Layout A: Large Square Image at the top for specific categories */}
+                                            {[
+                                                "panini",
+                                                "dolci",
+                                                "gelateria",
+                                            ].includes(category.id) ? (
+                                                hasImage ? (
+                                                    <div class="relative w-full aspect-square overflow-hidden mb-6 bg-(--color-menu-container)">
+                                                        <img
+                                                            src={item.image}
+                                                            alt={getLocal(
+                                                                item.name,
+                                                                item.nameEn,
+                                                            )}
+                                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                            loading="lazy"
+                                                        />
+                                                    </div>
+                                                ) : needsPlaceholder ? (
+                                                    <div class="relative w-full aspect-square overflow-hidden mb-6 bg-background flex items-center justify-center group-hover:bg-cream/5 transition-colors duration-700">
+                                                        <div
+                                                            class="absolute inset-0 opacity-10 dark:opacity-5 mix-blend-multiply dark:mix-blend-screen pointer-events-none transition-transform duration-1000 group-hover:scale-110"
+                                                            style="background-image: url('/brand assets/pattern chamoisee.svg'); background-size: 300px;"
+                                                        />
+                                                        <img
+                                                            src="/brand assets/Logotipo black.svg"
+                                                            alt="La Marinella"
+                                                            class="w-1/3 max-w-[150px] opacity-40 dark:hidden z-10"
+                                                        />
+                                                        <img
+                                                            src="/brand assets/Logotipo Duch White.svg"
+                                                            alt="La Marinella"
+                                                            class="w-1/3 max-w-[150px] opacity-40 hidden dark:block z-10"
+                                                        />
+                                                    </div>
+                                                ) : null
+                                            ) : null}
+
+                                            {/* Container for content and optional Layout B image */}
+                                            <div class="relative z-10 px-4 md:px-6 mb-2 flex flex-row gap-5 md:gap-8 items-start">
+                                                {/* Layout B: Small Image on the left for all other categories */}
+                                                {![
+                                                    "panini",
+                                                    "dolci",
+                                                    "gelateria",
+                                                ].includes(category.id) &&
+                                                    hasImage && (
+                                                        <div class="shrink-0 w-20 h-20 md:w-28 md:h-28 overflow-hidden bg-background">
+                                                            <img
+                                                                src={item.image}
+                                                                alt={getLocal(
+                                                                    item.name,
+                                                                    item.nameEn,
+                                                                )}
+                                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                                loading="lazy"
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                {/* Content Section */}
+                                                <div class="flex flex-col justify-start grow">
+                                                    <div class="flex justify-between items-baseline gap-4 mb-2">
+                                                        <h4 class="font-display font-medium text-xl md:text-2xl leading-tight text-text group-hover:text-accent transition-colors">
+                                                            {getLocal(
+                                                                item.name,
+                                                                item.nameEn,
+                                                            )}
+                                                        </h4>
+                                                        <div class="grow border-b border-dotted border-(--color-card-border) mx-4 relative top-[-6px] hidden sm:block" />
+                                                        <span class="font-display font-medium text-xl md:text-2xl text-accent shrink-0">
+                                                            {item.price}
+                                                        </span>
+                                                    </div>
+                                                    {(item.description ||
+                                                        item.descriptionEn) && (
+                                                        <p class="text-text/70 text-sm md:text-base font-light leading-relaxed max-w-2xl mt-1">
+                                                            {getLocal(
+                                                                item.description!,
+                                                                item.descriptionEn,
+                                                            )}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </section>
+                ))
+            }
+        </div>
+    </div>
+</main>
+
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Active state for navigation pills */
+    .nav-pill.active {
+        background-color: var(--color-accent) !important;
+        color: white !important;
+        box-shadow: 0 4px 15px rgba(229, 116, 44, 0.3);
+    }
+</style>
+
+<script>
+    // Simple scrollspy for the top navigation
+    document.addEventListener("astro:page-load", () => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Remove active from all
+                        document
+                            .querySelectorAll(".nav-tab")
+                            .forEach((link) => {
+                                link.classList.remove(
+                                    "active",
+                                    "text-accent",
+                                    "after:scale-x-100",
+                                );
+                                if (
+                                    link.getAttribute("href") ===
+                                    `#${entry.target.id}`
+                                ) {
+                                    link.classList.add(
+                                        "active",
+                                        "text-accent",
+                                        "after:scale-x-100",
+                                    );
+                                    // Scroll the pill into view
+                                    link.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "nearest",
+                                        inline: "center",
+                                    });
+                                }
+                            });
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: "-100px 0px -50% 0px" },
+        );
+
+        document
+            .querySelectorAll(".menu-section-preview")
+            .forEach((section) => {
+                observer.observe(section);
+            });
+    });
+</script>

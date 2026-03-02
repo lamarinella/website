@@ -1,0 +1,157 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/pasticceria", label: "Pasticceria" },
+    { href: "/gelateria", label: "Gelateria" },
+    { href: "/menu", label: "Menu" },
+    { href: "/contatti", label: "Contatti" },
+];
+---
+
+<!-- Backdrop for blocking interaction with page content -->
+<div
+    id="mobile-menu-backdrop"
+    class="fixed inset-0 z-99998 bg-black/20 backdrop-blur-[2px] transition-opacity duration-500 ease-out"
+    style="opacity: 0; pointer-events: none;"
+    aria-hidden="true"
+>
+</div>
+
+<!-- Menu Panel -->
+<div
+    id="mobile-menu-panel"
+    class="fixed top-0 bottom-0 right-0 w-[90%] md:w-[60%] z-99999 bg-text flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] translate-x-full shadow-2xl border-l border-white/10"
+    role="dialog"
+    aria-modal="true"
+>
+    <!-- Header with Close Button -->
+    <div class="flex items-center justify-end px-8 py-6">
+        <button
+            id="mobile-menu-close-btn"
+            class="w-12 h-12 flex items-center justify-center text-white hover:text-cream transition-colors"
+            aria-label="Chiudi menu"
+            type="button"
+        >
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+            >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex-1 flex flex-col justify-center px-8 pb-20">
+        <ul class="space-y-6 text-center">
+            {
+                navLinks.map((link) => (
+                    <li>
+                        <a
+                            href={link.href}
+                            class:list={[
+                                "mobile-nav-link block py-2 text-4xl md:text-5xl font-light tracking-wide transition-colors duration-300",
+                                currentPath === link.href
+                                    ? "text-cream"
+                                    : "text-white/80 hover:text-white",
+                            ]}
+                            style="font-family: 'Cormorant Garamond', serif;"
+                        >
+                            {link.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+
+    <!-- Footer -->
+    <div class="px-8 py-8 border-t border-white/10">
+        <p class="text-xs tracking-[0.2em] uppercase text-white/40 text-center">
+            Gelateria & Pasticceria Artigianale
+        </p>
+    </div>
+</div>
+
+<style is:global>
+    /* Animation for the page content pushing effect */
+    body.mobile-menu-open #page-content {
+        /* Move the page LEFT by the same amount as the menu width (90%) */
+        transform: translateX(-90%);
+        /* Optional: Keep opacity high to signify it's just moved */
+        opacity: 0.8;
+    }
+
+    @media (min-width: 768px) {
+        body.mobile-menu-open #page-content {
+            transform: translateX(-60%);
+        }
+    }
+</style>
+
+<script>
+    function initMobileMenu() {
+        const panel = document.getElementById("mobile-menu-panel");
+        const backdrop = document.getElementById("mobile-menu-backdrop");
+        const closeBtn = document.getElementById("mobile-menu-close-btn");
+        const navLinks = document.querySelectorAll(".mobile-nav-link");
+
+        if (!panel || !backdrop || !closeBtn) return;
+
+        function openMenu() {
+            // Show backdrop
+            backdrop!.style.pointerEvents = "auto";
+            backdrop!.style.opacity = "1";
+
+            // Slide in panel
+            panel!.classList.remove("translate-x-full");
+
+            // Push page content
+            document.body.classList.add("mobile-menu-open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMenu() {
+            // Hide backdrop
+            backdrop!.style.opacity = "0";
+            backdrop!.style.pointerEvents = "none";
+
+            // Slide out panel
+            panel!.classList.add("translate-x-full");
+
+            // Restore page content
+            document.body.classList.remove("mobile-menu-open");
+            document.body.style.overflow = "";
+        }
+
+        // Event Listeners
+        window.addEventListener("mobile-menu-open", openMenu);
+        closeBtn.addEventListener("click", closeMenu);
+        backdrop.addEventListener("click", closeMenu);
+
+        navLinks.forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+
+        // Escape key
+        document.addEventListener("keydown", (e) => {
+            if (
+                e.key === "Escape" &&
+                document.body.classList.contains("mobile-menu-open")
+            ) {
+                closeMenu();
+            }
+        });
+    }
+
+    // Initialize
+    initMobileMenu();
+    document.addEventListener("astro:after-swap", initMobileMenu);
+</script>

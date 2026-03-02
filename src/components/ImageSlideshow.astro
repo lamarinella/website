@@ -1,0 +1,72 @@
+---
+interface Props {
+    images: string[];
+    interval?: number;
+    class?: string;
+    alt?: string;
+}
+
+const {
+    images,
+    interval = 4000,
+    class: className = "",
+    alt = "Immagine galleria",
+} = Astro.props;
+
+const uniqueId = `slideshow-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div
+    class={`relative w-full h-full overflow-hidden group ${className}`}
+    data-slideshow-id={uniqueId}
+    data-interval={interval}
+>
+    {
+        images.map((img, index) => (
+            <img
+                src={img}
+                alt={`${alt} ${index + 1}`}
+                class={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 ${index === 0 ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+                loading={index === 0 ? "eager" : "lazy"}
+                data-index={index}
+            />
+        ))
+    }
+</div>
+
+<script>
+    function initSlideshows() {
+        const slideshows = document.querySelectorAll("[data-slideshow-id]");
+
+        slideshows.forEach((container) => {
+            const intervalTime = parseInt(
+                container.getAttribute("data-interval") || "4000",
+            );
+            const images = container.querySelectorAll("img");
+
+            if (images.length <= 1) return;
+
+            let currentIndex = 0;
+
+            setInterval(() => {
+                const nextIndex = (currentIndex + 1) % images.length;
+
+                // Hide current
+                images[currentIndex].classList.remove("opacity-100", "z-10");
+                images[currentIndex].classList.add("opacity-0", "z-0");
+
+                // Show next
+                images[nextIndex].classList.remove("opacity-0", "z-0");
+                images[nextIndex].classList.add("opacity-100", "z-10");
+
+                currentIndex = nextIndex;
+            }, intervalTime);
+        });
+    }
+
+    // Init on load
+    initSlideshows();
+
+    // Init on view transitions (if used)
+    document.addEventListener("astro:page-load", initSlideshows);
+</script>

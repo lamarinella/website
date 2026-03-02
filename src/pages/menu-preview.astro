@@ -1,0 +1,212 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import menuData from "../data/menu.json";
+
+const menuCategories = menuData.categories as any[];
+---
+
+<BaseLayout
+  title="Menu Preview | La Marinella"
+  description="Bozza visiva del nuovo menu con UX migliorata."
+>
+  <!-- Top Navigation (Horizontal Scroll Cards) -->
+  <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/5 py-4 shadow-sm transition-all duration-300" id="top-nav">
+    <div class="flex overflow-x-auto gap-3 px-4 md:px-8 no-scrollbar items-center pb-2">
+      {
+        menuCategories.map((cat) => (
+          <a
+            href={`#category-${cat.id}`}
+            class="nav-pill shrink-0 px-5 py-2.5 rounded-full bg-gray-100 hover:bg-black hover:text-white text-text font-medium text-sm transition-all duration-300 border border-transparent hover:border-black/10 flex items-center gap-2"
+          >
+            {cat.title}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <main class="bg-[#fafafa] pb-32">
+    <!-- Hero Header -->
+    <header class="py-16 md:py-24 text-center px-4">
+      <h1 class="text-5xl md:text-7xl font-display font-medium mb-4 animate-fade-in-up">
+        Il Nostro <span class="text-accent italic font-serif">Menu</span>
+      </h1>
+      <p class="text-text/60 max-w-lg mx-auto animate-fade-in-up [animation-delay:100ms] text-lg">
+        Esplora le nostre specialità in un'interfaccia completamente rinnovata, pensata per farti venire l'acquolina in bocca.
+      </p>
+    </header>
+
+    <div class="container-custom">
+      <div class="flex flex-col gap-20 max-w-5xl mx-auto">
+        {
+          menuCategories.map((category) => (
+            <section
+              id={`category-${category.id}`}
+              class="menu-section-preview scroll-mt-32"
+            >
+              <div class="mb-10 flex items-center justify-between border-b border-black/10 pb-4">
+                <h2 class="text-4xl md:text-5xl font-display font-medium text-text">
+                  {category.title}
+                </h2>
+                {category.special && (
+                   <span class="bg-accent/10 text-accent px-3 py-1 text-xs font-bold uppercase rounded-full tracking-wider">Scelta Top</span>
+                )}
+              </div>
+
+              {category.subcategories ? (
+                <div class="flex flex-col gap-12">
+                  {category.subcategories.map((sub: any) => (
+                    <div>
+                      <h3 class="text-2xl font-serif text-accent mb-6 flex items-center gap-4">
+                        {sub.title}
+                        {sub.priceHeader && <span class="text-xs text-text/50 uppercase tracking-widest font-sans ml-auto">{sub.priceHeader}</span>}
+                      </h3>
+                      
+                      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                        {sub.items.map((item: any) => (
+                          <div class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-black/5 hover:border-accent/30 overflow-hidden flex flex-col h-full">
+                            <!-- Overlay gradient on hover -->
+                            <div class="absolute inset-0 bg-linear-to-br from-white to-orange-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
+                            
+                            {/* Layout A: Large Square Image at the top for specific categories */}
+                            {['panini', 'dolci', 'gelateria'].includes(category.id) ? (
+                              item.image && (
+                                <div class="relative w-full aspect-square overflow-hidden z-10 border-b border-black/5">
+                                  <img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                                </div>
+                              )
+                            ) : null}
+
+                            {/* Container for content and optional Layout B image */}
+                            <div class="relative z-10 p-5 md:p-6 flex flex-row gap-4 grow">
+                              {/* Layout B: Small Image on the left for all other categories */}
+                              {!['panini', 'dolci', 'gelateria'].includes(category.id) && item.image && (
+                                <div class="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border border-black/5 shadow-sm">
+                                  <img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                                </div>
+                              )}
+                              
+                              {/* Content Section */}
+                              <div class="flex flex-col justify-start grow">
+                                <div class="flex justify-between items-start gap-4 mb-2">
+                                  <h4 class="font-display font-semibold text-lg md:text-xl leading-tight text-text group-hover:text-accent transition-colors">
+                                    {item.name}
+                                  </h4>
+                                  <div class="bg-gray-50 px-2 py-1 md:px-3 md:py-1 rounded-lg border border-black/5 group-hover:bg-accent group-hover:text-white transition-colors duration-300 shrink-0">
+                                    <span class="font-semibold">{item.price}</span>
+                                  </div>
+                                </div>
+                                {item.description && (
+                                  <p class="text-text/60 text-sm leading-relaxed">
+                                    {item.description}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                  {category.items?.map((item: any) => (
+                    <div class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-black/5 hover:border-accent/30 overflow-hidden flex flex-col h-full">
+                      <!-- Overlay gradient on hover -->
+                      <div class="absolute inset-0 bg-linear-to-br from-white to-orange-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
+                      
+                      {/* Layout A: Large Square Image at the top for specific categories */}
+                      {['panini', 'dolci', 'gelateria'].includes(category.id) ? (
+                        item.image && (
+                          <div class="relative w-full aspect-square overflow-hidden z-10 border-b border-black/5">
+                            <img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                          </div>
+                        )
+                      ) : null}
+
+                      {/* Container for content and optional Layout B image */}
+                      <div class="relative z-10 p-5 md:p-6 flex flex-row gap-4 grow">
+                        {/* Layout B: Small Image on the left for all other categories */}
+                        {!['panini', 'dolci', 'gelateria'].includes(category.id) && item.image && (
+                          <div class="shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden border border-black/5 shadow-sm">
+                            <img src={item.image} alt={item.name} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
+                          </div>
+                        )}
+                        
+                        {/* Content Section */}
+                        <div class="flex flex-col justify-start grow">
+                          <div class="flex justify-between items-start gap-4 mb-2">
+                            <h4 class="font-display font-semibold text-lg md:text-xl leading-tight text-text group-hover:text-accent transition-colors">
+                              {item.name}
+                            </h4>
+                            <div class="bg-gray-50 px-2 py-1 md:px-3 md:py-1 rounded-lg border border-black/5 group-hover:bg-accent group-hover:text-white transition-colors duration-300 shrink-0">
+                              <span class="font-semibold">{item.price}</span>
+                            </div>
+                          </div>
+                          {item.description && (
+                            <p class="text-text/60 text-sm leading-relaxed">
+                              {item.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Active state for navigation pills */
+  .nav-pill.active {
+    background-color: var(--color-accent) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(229, 116, 44, 0.3);
+  }
+</style>
+
+<script>
+  // Simple scrollspy for the top navigation
+  document.addEventListener("astro:page-load", () => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Remove active from all
+            document.querySelectorAll(".nav-pill").forEach((link) => {
+              link.classList.remove("active");
+              if (link.getAttribute("href") === `#${entry.target.id}`) {
+                link.classList.add("active");
+                // Scroll the pill into view
+                link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+              }
+            });
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "-100px 0px -50% 0px" }
+    );
+
+    document.querySelectorAll(".menu-section-preview").forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>

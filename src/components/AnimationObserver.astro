@@ -1,0 +1,62 @@
+<script>
+    document.addEventListener("astro:page-load", () => {
+        initAnimations();
+    });
+
+    // Also run on initial load if view transitions aren't used or for first paint
+    document.addEventListener("DOMContentLoaded", () => {
+        initAnimations();
+    });
+
+    function initAnimations() {
+        const observerOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.15, // Slightly higher threshold for better trigger
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const target = entry.target as HTMLElement;
+
+                    // Handle stagger container
+                    if (target.dataset.staggerContainer !== undefined) {
+                        const children =
+                            target.querySelectorAll(".reveal-on-scroll");
+                        children.forEach((child, index) => {
+                            const delayClass = `stagger-${Math.min(index + 1, 10)}`;
+                            child.classList.add(delayClass);
+                            triggerAnimation(child as HTMLElement);
+                        });
+                        observer.unobserve(target);
+                        return; // Container itself is just for orchestration
+                    }
+
+                    triggerAnimation(target);
+                    observer.unobserve(target);
+                }
+            });
+        }, observerOptions);
+
+        // Helper to apply animation classes
+        function triggerAnimation(el: HTMLElement) {
+            const animationClass = el.dataset.animation || "animate-fade-in-up";
+            el.classList.add(animationClass);
+            el.classList.remove("opacity-0");
+        }
+
+        // Observe individual elements
+        document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+            // If it's inside a stagger container, don't observe it individually
+            if (!el.closest("[data-stagger-container]")) {
+                observer.observe(el);
+            }
+        });
+
+        // Observe stagger containers
+        document.querySelectorAll("[data-stagger-container]").forEach((el) => {
+            observer.observe(el);
+        });
+    }
+</script>

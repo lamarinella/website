@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+---
+
+<BaseLayout
+    title="Cookie Policy | La Marinella"
+    description="Informativa sui cookie di Gelateria La Marinella."
+>
+    <Navigation />
+
+    <main>
+        <PageHero
+            title="Cookie"
+            titleAccent="Policy"
+            description="Informativa estesa sull'uso dei cookie."
+            backgroundImage="/images/zona tavolini-img.avif"
+            breadcrumbs={[{ label: "Cookie Policy" }]}
+        />
+
+        <section class="py-24 bg-white">
+            <div class="container-custom max-w-4xl">
+                <div class="prose prose-lg prose-stone mx-auto text-center">
+                    <!-- Iubenda Embed -->
+                    <a
+                        href="https://www.iubenda.com/privacy-policy/54893427/cookie-policy"
+                        class="iubenda-black iubenda-noiframe iubenda-embed inline-block bg-accent text-white px-8 py-4 rounded-lg font-serif text-lg hover:bg-accent/90 transition-colors no-underline"
+                        title="Cookie Policy"
+                    >
+                        Leggi la Cookie Policy Completa
+                    </a>
+
+                    <script type="text/javascript">
+                        (function (w, d) {
+                            var loader = function () {
+                                var s = d.createElement("script"),
+                                    tag = d.getElementsByTagName("script")[0];
+                                s.src = "https://cdn.iubenda.com/iubenda.js";
+                                tag.parentNode.insertBefore(s, tag);
+                            };
+                            if (w.addEventListener) {
+                                w.addEventListener("load", loader, false);
+                            } else if (w.attachEvent) {
+                                w.attachEvent("onload", loader);
+                            } else {
+                                w.onload = loader;
+                            }
+                        })(window, document);
+                    </script>
+
+                    <p class="mt-8 text-sm text-text/60">
+                        L'informativa cookie è gestita tramite Iubenda per
+                        garantire la massima conformità alle normative vigenti.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>

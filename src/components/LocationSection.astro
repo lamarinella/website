@@ -1,0 +1,210 @@
+---
+import { MapPin, Clock, Calendar, ArrowRight } from "lucide-react";
+---
+
+<section class="section-padding bg-[rgb(250,248,245)] relative overflow-hidden">
+  <!-- Pattern background -->
+  <div
+    class="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.02]"
+  >
+    <img
+      src="/brand assets/pattern chamoisee.svg"
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <div class="container-custom relative">
+    <div class="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center">
+      <!-- Left Column: Content -->
+      <div class="flex-1 flex flex-col gap-10 w-full lg:w-1/2">
+        <!-- Header -->
+        <div data-animation="fade-up">
+          <h2 class="text-4xl md:text-5xl lg:text-5xl mb-6 font-serif">
+            Nel Cuore della <br /><span class="italic text-[rgb(185,140,75)]"
+              >Costa degli Dei</span
+            >
+          </h2>
+          <p class="text-lg text-[rgb(12,12,12)]/70 leading-relaxed max-w-xl">
+            A Zambrone Marina, in una delle località più suggestive della
+            provincia di Vibo Valentia. Un angolo di paradiso dove il mare
+            cristallino incontra la tradizione.
+          </p>
+        </div>
+
+        <!-- Info List -->
+        <div class="flex flex-col gap-8">
+          <!-- Location -->
+          <div
+            class="flex gap-6 items-start"
+            data-animation="fade-up"
+            data-delay="100"
+          >
+            <div
+              class="shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm border border-[rgb(123,123,84)]/10"
+            >
+              <MapPin
+                className="w-5 h-5 text-[rgb(123,123,84)]"
+                strokeWidth={1}
+              />
+            </div>
+            <div>
+              <h3 class="text-lg font-serif text-[rgb(12,12,12)] mb-1">
+                Dove Siamo
+              </h3>
+              <p class="text-[rgb(12,12,12)]/70 text-base leading-relaxed">
+                Via Scalo FF.SS. snc<br />
+                <span class="font-medium text-[rgb(185,140,75)]"
+                  >89868 Zambrone (VV)</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- Schedule -->
+          <div
+            class="flex gap-6 items-start"
+            data-animation="fade-up"
+            data-delay="200"
+          >
+            <div
+              class="shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm border border-[rgb(123,123,84)]/10"
+            >
+              <Clock
+                className="w-5 h-5 text-[rgb(123,123,84)]"
+                strokeWidth={1}
+              />
+            </div>
+            <div>
+              <h3 class="text-lg font-serif text-[rgb(12,12,12)] mb-1">
+                Orari
+              </h3>
+              <p class="text-[rgb(12,12,12)]/70 text-base leading-relaxed">
+                Aperti tutti i giorni<br />
+                <span class="font-medium text-[rgb(12,12,12)]"
+                  >07:00 – 23:00</span
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- Season -->
+          <div
+            class="flex gap-6 items-start"
+            data-animation="fade-up"
+            data-delay="300"
+          >
+            <div
+              class="shrink-0 inline-flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-sm border border-[rgb(123,123,84)]/10"
+            >
+              <Calendar
+                className="w-5 h-5 text-[rgb(123,123,84)]"
+                strokeWidth={1}
+              />
+            </div>
+            <div>
+              <h3 class="text-lg font-serif text-[rgb(12,12,12)] mb-1">
+                Stagionalità
+              </h3>
+              <p class="text-[rgb(12,12,12)]/70 text-base leading-relaxed">
+                Da Marzo a Ottobre<br />
+                <span class="text-sm text-[rgb(12,12,12)]/50"
+                  >Seguici per le date esatte</span
+                >
+              </p>
+            </div>
+          </div>
+          <!-- CTA -->
+          <div class="mt-4" data-animation="fade-up" data-delay="400">
+            <a
+              href="https://maps.app.goo.gl/Pjqm3MaSimh7MvWn7"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-3 px-8 py-4 bg-[rgb(123,123,84)] text-white text-sm font-light tracking-[0.15em] uppercase transition-all duration-500 hover:bg-[rgb(185,140,75)] hover:shadow-lg hover:-translate-y-1 block w-fit"
+            >
+              <span>Passa a trovarci</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Image -->
+      <div
+        class="relative w-full lg:w-1/2"
+        data-animation="fade-left"
+        data-delay="200"
+      >
+        <div
+          class="absolute inset-0 bg-[rgb(185,140,75)]/10 transform translate-x-4 translate-y-4 rounded-sm -z-10"
+        >
+        </div>
+        <div
+          class="relative rounded-sm overflow-hidden shadow-2xl aspect-square"
+        >
+          <img
+            src="/images/paradiso del sub-img.avif"
+            alt="Paradiso del Sub Zambrone"
+            class="w-full h-full object-cover transform transition-transform duration-1000 hover:scale-105"
+          />
+          <!-- Overlay gradient -->
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black/30 to-transparent pointer-events-none"
+          >
+          </div>
+        </div>
+
+        <!-- Decoration Label -->
+        <div
+          class="absolute -bottom-6 -left-6 bg-white p-6 shadow-xl max-w-[180px] hidden md:block"
+        >
+          <p class="font-serif text-[rgb(123,123,84)] text-lg leading-tight">
+            A due passi dal mare più bello.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .location-animate {
+      opacity: 0;
+      transform: translateY(30px);
+      transition:
+        opacity 0.8s ease-out,
+        transform 0.8s ease-out;
+    }
+
+    .location-animate.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <script>
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const element = entry.target as HTMLElement;
+          const delay = element.dataset.delay || "0";
+
+          setTimeout(() => {
+            element.classList.add("animated");
+          }, parseInt(delay));
+
+          observer.unobserve(element);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll(".location-animate").forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
+</section>

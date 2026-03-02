@@ -1,0 +1,61 @@
+---
+interface Props {
+    images: string[];
+    speed?: number; // Duration in seconds for one full loop
+    height?: string; // CSS height value
+    direction?: "left" | "right";
+}
+
+const {
+    images,
+    speed = 40,
+    height = "h-[50vh] md:h-[60vh]",
+    direction = "left",
+} = Astro.props;
+
+// Duplicate images to create seamless loop
+const allImages = [...images, ...images];
+---
+
+<div class="relative w-full overflow-hidden bg-background">
+    <div class={`flex ${height} w-full`}>
+        <div
+            class={`flex animate-scroll ${direction === "right" ? "reverse" : ""}`}
+            style={`animation-duration: ${speed}s;`}
+        >
+            {
+                allImages.map((img, index) => (
+                    <div class="relative h-full aspect-[4/3] shrink-0 border-r border-white/10">
+                        <img
+                            src={img}
+                            alt={`Galleria immagine ${index + 1}`}
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .animate-scroll {
+        animation: scroll linear infinite;
+        /* Ensure width fits content */
+        width: max-content;
+    }
+
+    .animate-scroll.reverse {
+        animation-direction: reverse;
+    }
+</style>

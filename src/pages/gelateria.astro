@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import AnimationObserver from '../components/AnimationObserver.astro';
+import FullScreenSlider from '../components/FullScreenSlider.astro';
+
+// Image paths
+const flavorImages = {
+  ananas: "/images/gelateria-img/gusti%20gelato/ananas.avif",
+  buenoBianco: "/images/gelateria-img/gusti%20gelato/bueno%20bianco_20250618044154.avif",
+  caramelloSalato: "/images/gelateria-img/gusti%20gelato/caramello%20salato_20250618044155.avif",
+  cheesecake: "/images/gelateria-img/gusti%20gelato/cheescake_20250618044155.avif",
+  cocco: "/images/gelateria-img/gusti%20gelato/cocco_20250618044156.avif",
+  fiorDiLatte: "/images/gelateria-img/gusti%20gelato/fior%20di%20latte_20250618044156.avif",
+  fondente: "/images/gelateria-img/gusti%20gelato/fondente_20250618044156.avif",
+  fragola: "/images/gelateria-img/gusti%20gelato/fragola.avif",
+  limone: "/images/gelateria-img/gusti%20gelato/limone_20250618044157.avif",
+  melone: "/images/gelateria-img/gusti%20gelato/melone_20250618044157.avif",
+  nutella: "/images/gelateria-img/gusti%20gelato/nutella_20250618044158.avif",
+  pistacchio: "/images/gelateria-img/gusti%20gelato/pistacchio_20250618044152.avif",
+  tiramisu: "/images/gelateria-img/gusti%20gelato/tiramisù_20250618044153.avif",
+  yogurt: "/images/gelateria-img/gusti%20gelato/yougurt_20250618044153.avif",
+  zuppaInglese: "/images/gelateria-img/gusti%20gelato/zuppa%20inglese_20250618044154.avif",
+};
+
+const flavors = [
+  { name: "Ananas", image: flavorImages.ananas },
+  { name: "Bueno Bianco", image: flavorImages.buenoBianco },
+  { name: "Caramello Salato", image: flavorImages.caramelloSalato },
+  { name: "Cheesecake", image: flavorImages.cheesecake },
+  { name: "Cocco", image: flavorImages.cocco },
+  { name: "Fior di Latte", image: flavorImages.fiorDiLatte },
+  { name: "Fondente", image: flavorImages.fondente },
+  { name: "Fragola", image: flavorImages.fragola },
+  { name: "Limone", image: flavorImages.limone },
+  { name: "Melone", image: flavorImages.melone },
+  { name: "Nutella", image: flavorImages.nutella },
+  { name: "Pistacchio", image: flavorImages.pistacchio },
+  { name: "Tiramisu", image: flavorImages.tiramisu },
+  { name: "Yogurt", image: flavorImages.yogurt },
+  { name: "Zuppa Inglese", image: flavorImages.zuppaInglese },
+];
+---
+
+<BaseLayout
+  title="Gelateria | La Marinella"
+  description="Gelato artigianale cremoso e intenso, preparato quotidianamente con latte fresco e ingredienti naturali. Scopri i nostri 24 gusti."
+>
+  <Navigation />
+
+  <main>
+    <!-- Hero Section -->
+    <PageHero
+      title="Cremosità"
+      titleAccent="Superiore"
+      description="Dal 2006 la stessa passione, in ogni cono. Ingredienti freschi e naturali, solo il meglio per i nostri clienti."
+      backgroundVideo="/videos/optimized/hero-gelateria.webm"
+      breadcrumbs={[{ label: "Gelateria" }]}
+    />
+
+    <!-- Intro Section -->
+    <section class="section-padding bg-white">
+      <div class="container-custom text-center max-w-4xl">
+        <span class="text-accent text-sm uppercase tracking-[0.2em] mb-4 block animate-fade-in">I Nostri Gusti</span>
+        <h2 class="text-4xl md:text-5xl font-serif mb-4 animate-fade-in" style="animation-delay: 100ms;">
+          Quale <span class="italic text-accent">preferisci?</span>
+        </h2>
+        <p class="text-lg md:text-xl text-[rgb(12,12,12)]/70 leading-relaxed font-light mb-2 animate-fade-in" style="animation-delay: 200ms;">
+          Difficile scegliere, nel dubbio assaggiali tutti!
+        </p>
+      </div>
+    </section>
+
+    <!-- Flavors Grid -->
+    <section class="pb-24 bg-white">
+      <div class="container-custom">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {flavors.map((flavor, index) => (
+            <div 
+              class="group relative aspect-square overflow-hidden rounded-sm reveal-on-scroll opacity-0 cursor-pointer"
+              style={`transition-delay: ${(index % 4) * 50}ms`}
+            >
+              <!-- Background Image -->
+              <img 
+                src={flavor.image} 
+                alt={`Gusto ${flavor.name}`}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              
+              <!-- Overlay -->
+              <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-90"></div>
+              
+              <!-- Content -->
+              <div class="absolute inset-0 flex items-center justify-center p-4 text-center">
+                <h4 class="text-white font-serif text-xl md:text-2xl tracking-wide transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
+                  {flavor.name}
+                </h4>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div class="mt-12 text-center">
+             <p class="text-[rgb(12,12,12)]/60 text-sm italic">
+            * La disponibilità dei gusti può variare in base alla stagionalità degli ingredienti.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quality Section -->
+    <section class="section-padding bg-[rgb(250,248,245)]">
+      <div class="container-custom">
+        <div class="grid md:grid-cols-3 gap-12 text-center">
+          <div class="reveal-on-scroll opacity-0">
+            <div class="text-accent mb-6 flex justify-center transform transition-transform duration-500 hover:scale-110">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="stroke-current" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+              </svg>
+            </div>
+            <h3 class="font-serif text-xl mb-4">Ingredienti Naturali</h3>
+            <p class="text-[rgb(12,12,12)]/70">Solo materie prime fresche, latte italiano e frutta di stagione selezionata con cura.</p>
+          </div>
+          <div class="reveal-on-scroll opacity-0" style="transition-delay: 150ms">
+             <div class="text-accent mb-6 flex justify-center transform transition-transform duration-500 hover:scale-110">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="stroke-current" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7 11 4.08 10.35a1 1 0 0 0 1.84 0L17 11"/>
+                <path d="M17 11a5 5 0 0 0-10 0"/>
+              </svg>
+            </div>
+            <h3 class="font-serif text-xl mb-4">Produzione Giornaliera</h3>
+            <p class="text-[rgb(12,12,12)]/70">Il gelato viene mantecato fresco ogni mattina per garantire la massima cremosità.</p>
+          </div>
+          <div class="reveal-on-scroll opacity-0" style="transition-delay: 300ms">
+             <div class="text-accent mb-6 flex justify-center transform transition-transform duration-500 hover:scale-110">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="stroke-current" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <h3 class="font-serif text-xl mb-4">Ricette Tradizionali</h3>
+            <p class="text-[rgb(12,12,12)]/70">Antiche ricette rivisitate con passione, senza basi pronte o semilavorati industriali.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Screen Sliders -->
+    <div class="flex flex-col">
+      <FullScreenSlider 
+        images={[
+          "/images/gelateria-img/img-1.avif",
+          "/images/gelateria-img/1_1.avif",
+          "/images/gelateria-img/1_2.avif",
+          "/images/gelateria-img/1_3.avif",
+          
+          "/images/gelateria-img/brioche%20gelati%202.avif",
+          "/images/gelateria-img/IMG_8026.avif",
+        ]}
+        speed={50}
+        height="h-[30vh] md:h-[40vh]"
+        direction="left"
+      />
+      
+      <FullScreenSlider 
+        images={[
+           "/images/gelateria-img/brioche%20gelati%201.avif",
+           "/images/gelateria-img/cono%20gelato.avif",
+           "/images/gelateria-img/gelato%20bueno.avif",
+           "/images/gelateria-img/gelato5.avif",
+           "/images/gelateria-img/1_4.avif",
+           "/images/gelateria-img/vetrina%20gelati.avif"
+        ]}
+        speed={50}
+        height="h-[30vh] md:h-[40vh]"
+        direction="right"
+      />
+    </div>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-accent text-white text-center">
+      <div class="container-custom">
+        <h2 class="text-4xl md:text-5xl font-serif mb-8">Voglia di un Cono?</h2>
+        <p class="text-lg text-white/80 max-w-2xl mx-auto mb-12">
+          Vieni a trovarci a Zambrone per scoprire il vero sapore del gelato artigianale.
+        </p>
+        <a href="https://maps.app.goo.gl/Pjqm3MaSimh7MvWn7" target="_blank" class="btn bg-white text-accent hover:bg-cream">
+          Portami in Gelateria
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <AnimationObserver />
+</BaseLayout>

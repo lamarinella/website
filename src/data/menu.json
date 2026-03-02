@@ -1,0 +1,891 @@
+{
+  "categories": [
+    {
+      "id": "caffetteria",
+      "title": "Caffetteria",
+      "titleEn": "Cafeteria",
+      "icon": "coffee",
+      "style": "dark",
+      "backgroundImage": "/images/menu/caffetteria.jpg",
+      "items": [
+        {
+          "name": "Caffè",
+          "nameEn": "Espresso",
+          "price": "€1.20"
+        },
+        {
+          "name": "Caffè Doppio",
+          "nameEn": "Double Espresso",
+          "price": "€2.00"
+        },
+        {
+          "name": "Caffè Americano",
+          "nameEn": "Americano",
+          "price": "€1.50"
+        },
+        {
+          "name": "Caffè Corretto",
+          "nameEn": "Espresso with Spirits",
+          "price": "€1.20"
+        },
+        {
+          "name": "Ginseng",
+          "price": "€1.80"
+        },
+        {
+          "name": "Orzo",
+          "nameEn": "Barley Coffee",
+          "price": "€1.80"
+        },
+        {
+          "name": "Caffè Shakerato",
+          "nameEn": "Shakerato (Iced Espresso)",
+          "price": "€2.50"
+        },
+        {
+          "name": "Caffè Freddo",
+          "nameEn": "Cold Espresso",
+          "price": "€1.50"
+        },
+        {
+          "name": "Cappuccino",
+          "price": "€1.80"
+        },
+        {
+          "name": "Cappuccino Decaffeinato",
+          "nameEn": "Decaf Cappuccino",
+          "price": "€2.00"
+        },
+        {
+          "name": "Latte Bianco",
+          "nameEn": "Milk",
+          "price": "€1.50"
+        },
+        {
+          "name": "Latte Macchiato",
+          "nameEn": "Latte Macchiato",
+          "price": "€1.80"
+        },
+        {
+          "name": "Thè Caldo",
+          "nameEn": "Hot Tea",
+          "price": "€1.50"
+        }
+      ]
+    },
+    {
+      "id": "dolci",
+      "title": "Dolci",
+      "titleEn": "Pastries",
+      "icon": "croissant",
+      "style": "dark",
+      "backgroundImage": "/images/menu/dolci.avif",
+      "items": [
+        {
+          "name": "Cornetto Vuoto",
+          "nameEn": "Plain Croissant",
+          "price": "€1.50"
+        },
+        {
+          "name": "Cornetto Marmellata",
+          "nameEn": "Jam Croissant",
+          "price": "€1.50"
+        },
+        {
+          "name": "Cornetto Cioccolato",
+          "nameEn": "Chocolate Croissant",
+          "price": "€1.50"
+        },
+        {
+          "name": "Cornetto Crema",
+          "nameEn": "Cream Croissant",
+          "price": "€2.00"
+        },
+        {
+          "name": "Brioche",
+          "nameEn": "Brioche Bun",
+          "price": "€1.50"
+        },
+        {
+          "name": "Muffin",
+          "price": "€2.50"
+        },
+        {
+          "name": "Ciambella",
+          "nameEn": "Donut",
+          "price": "€1.50"
+        },
+        {
+          "name": "Krapfen",
+          "nameEn": "Jam Donut",
+          "price": "€2.50"
+        },
+        {
+          "name": "Cannolo Fritto",
+          "nameEn": "Fried Cannolo",
+          "price": "€2.50"
+        },
+        {
+          "name": "Crostatine",
+          "nameEn": "Small Tarts",
+          "price": "€2.00"
+        },
+        {
+          "name": "Occhio di Bue",
+          "nameEn": "Jam Cookie",
+          "price": "€2.00"
+        }
+      ]
+    },
+    {
+      "id": "panini",
+      "title": "Panini",
+      "titleEn": "Sandwiches",
+      "icon": "hamburger",
+      "style": "dark",
+      "backgroundImage": "/images/menu/panini.jpg",
+      "items": [
+        {
+          "name": "Caprese",
+          "description": "Pomodoro, lattuga, mozzarella",
+          "descriptionEn": "Tomato, lettuce, mozzarella",
+          "price": "€4.00",
+          "image": "/images/pasticceria-img/1.avif"
+        },
+        {
+          "name": "Marinella",
+          "description": "Prosciutto cotto, provola, lattuga, pomodoro",
+          "descriptionEn": "Cooked ham, provola cheese, lettuce, tomato",
+          "price": "€4.50",
+          "image": "/images/pasticceria-img/2.avif"
+        },
+        {
+          "name": "Sfizioso",
+          "description": "Salame dolce, provola, pomodoro",
+          "descriptionEn": "Salami, provola cheese, tomato",
+          "price": "€4.50"
+        },
+        {
+          "name": "San Daniele",
+          "description": "Prosciutto crudo, provola, lattuga",
+          "descriptionEn": "Parma ham, provola cheese, lettuce",
+          "price": "€5.00"
+        },
+        {
+          "name": "Pig",
+          "description": "Porchetta, provola, lattuga, pomodoro, ketchup",
+          "descriptionEn": "Porchetta, provola cheese, lettuce, tomato, ketchup",
+          "price": "€5.00"
+        },
+        {
+          "name": "Calabrese",
+          "description": "Salame piccante, provola, nduja, pomodoro",
+          "descriptionEn": "Spicy salami, provola cheese, nduja, tomato",
+          "price": "€5.50"
+        },
+        {
+          "name": "Tonnara",
+          "description": "Tonno, provola, lattuga, pomodoro, maionese",
+          "descriptionEn": "Tuna, provola cheese, lettuce, tomato, mayonnaise",
+          "price": "€5.50"
+        },
+        {
+          "name": "Fantasy",
+          "description": "Speck, provola, lattuga, pomodoro",
+          "descriptionEn": "Speck, provola cheese, lettuce, tomato",
+          "price": "€5.50"
+        }
+      ]
+    },
+    {
+      "id": "bevande",
+      "title": "Bevande",
+      "titleEn": "Drinks",
+      "icon": "soft-drink",
+      "style": "dark",
+      "backgroundImage": "/images/menu/bibite.jpg",
+      "items": [
+        {
+          "name": "Acqua 50cl",
+          "nameEn": "Water 50cl",
+          "price": "€1.00",
+          "image": "/images/menu/caffetteria.jpg"
+        },
+        {
+          "name": "Acqua 150cl",
+          "nameEn": "Water 150cl",
+          "price": "€1.50"
+        },
+        {
+          "name": "Coca Cola",
+          "price": "€2.00",
+          "image": "/images/menu/bibite.jpg"
+        },
+        {
+          "name": "Fanta",
+          "price": "€2.00"
+        },
+        {
+          "name": "Sprite",
+          "price": "€2.00"
+        },
+        {
+          "name": "Estathè",
+          "nameEn": "Iced Tea",
+          "price": "€2.50"
+        },
+        {
+          "name": "Schweppes",
+          "price": "€2.00"
+        },
+        {
+          "name": "Lemon Soda",
+          "price": "€2.00"
+        },
+        {
+          "name": "Red Bull",
+          "price": "€3.00"
+        },
+        {
+          "name": "Gassosa",
+          "price": "€2.00"
+        },
+        {
+          "name": "Cedrata",
+          "price": "€2.00"
+        },
+        {
+          "name": "Bergamotto",
+          "nameEn": "Bergamot Soda",
+          "price": "€2.50"
+        },
+        {
+          "name": "Chinotto",
+          "price": "€2.00"
+        },
+        {
+          "name": "Latte di Mandorla",
+          "nameEn": "Almond Milk",
+          "price": "€2.00"
+        },
+        {
+          "name": "Succhi di Frutta",
+          "nameEn": "Fruit Juices",
+          "price": "€2.50"
+        }
+      ]
+    },
+    {
+      "id": "birre",
+      "title": "Birre",
+      "titleEn": "Beers",
+      "icon": "beer",
+      "style": "dark",
+      "backgroundImage": "/images/menu/birre.avif",
+      "items": [
+        {
+          "name": "Dreher",
+          "price": "€2.00"
+        },
+        {
+          "name": "Beck's",
+          "price": "€3.00"
+        },
+        {
+          "name": "Heineken",
+          "price": "€3.00"
+        },
+        {
+          "name": "Nastro Azzurro",
+          "price": "€3.00"
+        },
+        {
+          "name": "Corona",
+          "price": "€4.00"
+        },
+        {
+          "name": "Tennent's",
+          "price": "€4.00"
+        },
+        {
+          "name": "Ceres",
+          "price": "€4.00"
+        },
+        {
+          "name": "Bjørne",
+          "price": "€4.00"
+        }
+      ]
+    },
+    {
+      "id": "aperitivi",
+      "title": "Aperitivi",
+      "titleEn": "Aperitifs",
+      "icon": "aperitif",
+      "style": "dark",
+      "backgroundImage": "/images/menu/aperitivi.jpg",
+      "items": [
+        {
+          "name": "Crodino",
+          "price": "€3.00"
+        },
+        {
+          "name": "Campari Soda",
+          "price": "€3.50"
+        },
+        {
+          "name": "Campari Gin",
+          "price": "€4.00"
+        },
+        {
+          "name": "Campari Bitter",
+          "price": "€3.00"
+        },
+        {
+          "name": "Martini",
+          "price": "€3.00"
+        },
+        {
+          "name": "Negroni",
+          "price": "€6.00"
+        },
+        {
+          "name": "Negroni Sbagliato",
+          "price": "€6.00"
+        },
+        {
+          "name": "Negrosky",
+          "price": "€6.00"
+        },
+        {
+          "name": "Americano",
+          "price": "€5.00"
+        },
+        {
+          "name": "Aperol Spritz",
+          "price": "€6.00"
+        },
+        {
+          "name": "Limoncello Spritz",
+          "price": "€6.00"
+        },
+        {
+          "name": "Bellini",
+          "price": "€5.00"
+        },
+        {
+          "name": "Rossini",
+          "price": "€5.00"
+        }
+      ]
+    },
+    {
+      "id": "cocktails",
+      "title": "Cocktails",
+      "titleEn": "Cocktails",
+      "icon": "cocktail",
+      "style": "dark",
+      "backgroundImage": "/images/menu/cocktails.jpg",
+      "subcategories": [
+        {
+          "title": "Gin Tonic/Lemon",
+          "items": [
+            {
+              "name": "Bombay",
+              "price": "€7.00"
+            },
+            {
+              "name": "Tanqueray",
+              "price": "€7.00"
+            },
+            {
+              "name": "Hendrick's",
+              "price": "€8.00"
+            },
+            {
+              "name": "Gin Mare",
+              "price": "€9.00"
+            },
+            {
+              "name": "Portofino",
+              "price": "€10.00"
+            },
+            {
+              "name": "Il Calabrese",
+              "price": "€9.00"
+            }
+          ]
+        },
+        {
+          "title": "Alcolici",
+          "titleEn": "Alcoholic",
+          "items": [
+            {
+              "name": "Cuba Libre",
+              "description": "Rum, coca cola, lime",
+              "descriptionEn": "Rum, Coca-Cola, lime",
+              "price": "€6.00"
+            },
+            {
+              "name": "Pina Colada",
+              "description": "Rum, succo d'ananas, cocco",
+              "descriptionEn": "Rum, pineapple juice, coconut",
+              "price": "€7.00"
+            },
+            {
+              "name": "Sex on the Beach",
+              "description": "Vodka, liquore alla pesca, succo d'arancia, mirtillo",
+              "descriptionEn": "Vodka, peach liqueur, orange juice, cranberry",
+              "price": "€7.00"
+            },
+            {
+              "name": "Long Island Ice Tea",
+              "description": "Vodka, rum bianco, triple sec, tequila, sweet & sour, cola",
+              "descriptionEn": "Vodka, white rum, triple sec, tequila, sweet & sour, cola",
+              "price": "€7.00"
+            },
+            {
+              "name": "Tequila Sunrise",
+              "description": "Tequila, succo d'arancia, granatina",
+              "descriptionEn": "Tequila, orange juice, grenadine",
+              "price": "€6.00"
+            },
+            {
+              "name": "Negroni / Sbagliato",
+              "price": "€6.00"
+            },
+            {
+              "name": "Mojito / Pestati",
+              "nameEn": "Mojito / Muddled Drinks",
+              "price": "€7.00"
+            }
+          ]
+        },
+        {
+          "title": "Analcolici",
+          "titleEn": "Non-Alcoholic",
+          "items": [
+            {
+              "name": "Cuba Libre Analcolico",
+              "nameEn": "Virgin Cuba Libre",
+              "price": "€6.00"
+            },
+            {
+              "name": "Pina Colada Analcolica",
+              "nameEn": "Virgin Pina Colada",
+              "price": "€7.00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vini",
+      "title": "Vini & Bollicine",
+      "titleEn": "Wines & Bubbles",
+      "icon": "wine",
+      "style": "dark",
+      "backgroundImage": "/images/menu/vini.jpg",
+      "subcategories": [
+        {
+          "title": "Vini - Spumanti",
+          "titleEn": "Wines - Sparkling",
+          "priceHeader": "Calice / Bottiglia",
+          "priceHeaderEn": "Glass / Bottle",
+          "items": [
+            {
+              "name": "Greco Bianco",
+              "price": "€3.50 / €15.00"
+            },
+            {
+              "name": "Berlucchi",
+              "price": "€30.00"
+            },
+            {
+              "name": "Bellavista",
+              "price": "€50.00"
+            },
+            {
+              "name": "Ferrari",
+              "price": "€30.00"
+            },
+            {
+              "name": "Ferrari Maximum",
+              "price": "€35.00"
+            },
+            {
+              "name": "Ferrari Perlè",
+              "price": "€50.00"
+            },
+            {
+              "name": "Cà Del Bosco",
+              "price": "€50.00"
+            }
+          ]
+        },
+        {
+          "title": "Champagne",
+          "items": [
+            {
+              "name": "Mumm Grand Cordon",
+              "price": "€90.00"
+            },
+            {
+              "name": "Moet & Chandon",
+              "price": "€90.00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distillati",
+      "title": "Distillati",
+      "titleEn": "Spirits",
+      "icon": "whiskey",
+      "style": "dark",
+      "backgroundImage": "/images/menu/distillati.jpg",
+      "subcategories": [
+        {
+          "title": "Rum",
+          "items": [
+            {
+              "name": "Havana Club",
+              "price": "€3.50"
+            },
+            {
+              "name": "Havana Club 7 anos",
+              "price": "€4.00"
+            },
+            {
+              "name": "Don Papa",
+              "price": "€5.00"
+            },
+            {
+              "name": "Diplomatico",
+              "description": "Reserva Exclusiva",
+              "price": "€5.00"
+            },
+            {
+              "name": "Matusalem",
+              "price": "€4.50"
+            },
+            {
+              "name": "Matusalem",
+              "description": "Gran Reserva 15 years",
+              "price": "€5.00"
+            },
+            {
+              "name": "Matusalem",
+              "description": "Gran Reserva 23 years",
+              "price": "€7.50"
+            },
+            {
+              "name": "Zacapa",
+              "description": "23 years",
+              "price": "€7.50"
+            }
+          ]
+        },
+        {
+          "title": "Whisky",
+          "items": [
+            {
+              "name": "Jack Daniel's",
+              "description": "Old No. 7",
+              "price": "€4.00"
+            },
+            {
+              "name": "Chivas Regal",
+              "description": "12 years",
+              "price": "€4.00"
+            },
+            {
+              "name": "Ballantine's",
+              "price": "€4.00"
+            },
+            {
+              "name": "Red Label",
+              "price": "€4.00"
+            },
+            {
+              "name": "Glen Grant",
+              "price": "€4.00"
+            },
+            {
+              "name": "J&B",
+              "price": "€4.00"
+            }
+          ]
+        },
+        {
+          "title": "Grappe",
+          "items": [
+            {
+              "name": "903",
+              "price": "€2.50"
+            },
+            {
+              "name": "903 Barrique",
+              "price": "€3.00"
+            },
+            {
+              "name": "Castagner",
+              "price": "€3.00"
+            },
+            {
+              "name": "Castagner Barrique",
+              "price": "€3.50"
+            },
+            {
+              "name": "Diciotto Lune",
+              "price": "€4.00"
+            },
+            {
+              "name": "Grappa \"Of\" Amarone Barrique",
+              "price": "€5.00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "amari",
+      "title": "Amari e Digestivi",
+      "titleEn": "Bitters & Digestifs",
+      "icon": "digestif",
+      "style": "dark",
+      "backgroundImage": "/images/menu/amari-digestivi.jpg",
+      "items": [
+        {
+          "name": "Montenegro",
+          "price": "€3.00"
+        },
+        {
+          "name": "Amaro del Capo",
+          "price": "€3.00"
+        },
+        {
+          "name": "Jagermeister",
+          "price": "€3.00"
+        },
+        {
+          "name": "Kephas",
+          "price": "€3.00"
+        },
+        {
+          "name": "Jefferson",
+          "price": "€4.00"
+        },
+        {
+          "name": "Amaro Siland",
+          "price": "€3.00"
+        },
+        {
+          "name": "Amaro 05",
+          "price": "€3.00"
+        },
+        {
+          "name": "Kaciuto",
+          "price": "€3.00"
+        },
+        {
+          "name": "Rupes",
+          "price": "€3.00"
+        },
+        {
+          "name": "Averna",
+          "price": "€3.00"
+        },
+        {
+          "name": "Fernet Branca",
+          "price": "€3.00"
+        },
+        {
+          "name": "Branca Menta",
+          "price": "€3.00"
+        },
+        {
+          "name": "Ramazzotti",
+          "price": "€3.00"
+        },
+        {
+          "name": "Amaretto Disaronno",
+          "price": "€3.00"
+        },
+        {
+          "name": "Limoncello",
+          "price": "€3.00"
+        }
+      ]
+    },
+    {
+      "id": "gelateria",
+      "title": "Gelateria",
+      "titleEn": "Ice Cream Shop",
+      "icon": "ice-cream",
+      "style": "dark",
+      "backgroundImage": "/images/menu/gelati.webp",
+      "subcategories": [
+        {
+          "title": "Gelati",
+          "titleEn": "Ice Creams",
+          "items": [
+            {
+              "name": "Cono (Solo ritiro al banco)",
+              "nameEn": "Cone (Counter Only)",
+              "price": "€2.50"
+            },
+            {
+              "name": "Coppetta Piccola",
+              "nameEn": "Small Cup",
+              "price": "€2.50"
+            },
+            {
+              "name": "Coppetta Media",
+              "nameEn": "Medium Cup",
+              "price": "€3.00"
+            },
+            {
+              "name": "Coppetta Grande",
+              "nameEn": "Large Cup",
+              "price": "€3.50"
+            },
+            {
+              "name": "Brioche con Gelato",
+              "nameEn": "Brioche with Gelato",
+              "price": "€5.00"
+            },
+            {
+              "name": "Frappè",
+              "nameEn": "Milkshake",
+              "price": "€4.00"
+            },
+            {
+              "name": "Affogato al Caffè",
+              "nameEn": "Espresso with Gelato",
+              "price": "€4.00"
+            },
+            {
+              "name": "Tartufo",
+              "nameEn": "Chocolate Truffle Ice Cream",
+              "price": "€5.00"
+            },
+            {
+              "name": "Granita",
+              "nameEn": "Granita (Iced Blend)",
+              "price": "€3.00"
+            }
+          ]
+        },
+        {
+          "title": "Le nostre Coppe",
+          "titleEn": "Our Sundaes",
+          "items": [
+            {
+              "name": "Coppa Reale",
+              "description": "Fior di latte, nocciola, pistacchio, panna",
+              "descriptionEn": "Fior di latte, hazelnut, pistachio, whipped cream",
+              "price": "€7.00"
+            },
+            {
+              "name": "Mix Frutti",
+              "description": "Fragola, melone, limone, frutti di bosco",
+              "descriptionEn": "Strawberry, melon, lemon, wild berries",
+              "price": "€7.00"
+            },
+            {
+              "name": "La Delizia",
+              "description": "Zuppa inglese, amarena, stracciatella",
+              "descriptionEn": "Trifle, wild cherry, stracciatella",
+              "price": "€7.00"
+            },
+            {
+              "name": "Black & White",
+              "description": "Cocco, stracciatella, cioccolato fondente",
+              "descriptionEn": "Coconut, stracciatella, dark chocolate",
+              "price": "€7.00"
+            },
+            {
+              "name": "La Marinella",
+              "description": "Nocciola, pistacchio, cioccolato, nutella, panna",
+              "descriptionEn": "Hazelnut, pistachio, chocolate, Nutella, whipped cream",
+              "price": "€7.00"
+            },
+            {
+              "name": "Golosa",
+              "description": "Mandorla, pistacchio, panna",
+              "descriptionEn": "Almond, pistachio, whipped cream",
+              "price": "€7.00"
+            },
+            {
+              "name": "Fantasy",
+              "description": "Fantasia del gelataio",
+              "descriptionEn": "Gelato maker's choice",
+              "price": "€7.00"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rosticceria",
+      "title": "Rosticceria",
+      "titleEn": "Rotisserie & Bakery",
+      "icon": "pizza",
+      "style": "dark",
+      "backgroundImage": "/images/menu/rosticceria.avif",
+      "items": [
+        {
+          "name": "Pizza Margherita",
+          "price": "€1.50"
+        },
+        {
+          "name": "Trancio Pizza Farcita",
+          "nameEn": "Stuffed Pizza Slice",
+          "description": "Gusti del giorno al banco",
+          "descriptionEn": "Daily flavors at the counter",
+          "price": "€2.00"
+        },
+        {
+          "name": "Calzone",
+          "price": "€2.50"
+        },
+        {
+          "name": "Pitone",
+          "nameEn": "Fried Calzone",
+          "price": "€2.50"
+        },
+        {
+          "name": "Mozzarella in Carrozza",
+          "nameEn": "Fried Mozzarella Sandwich",
+          "price": "€2.00"
+        },
+        {
+          "name": "Focaccia",
+          "price": "€1.50"
+        },
+        {
+          "name": "Focaccia Farcita",
+          "nameEn": "Stuffed Focaccia",
+          "price": "€2.00"
+        },
+        {
+          "name": "Focaccia Ripiena",
+          "nameEn": "Filled Focaccia",
+          "price": "€2.50"
+        },
+        {
+          "name": "Arancino",
+          "nameEn": "Cured Rice Ball",
+          "price": "€2.50"
+        },
+        {
+          "name": "Crocchetta di Patate",
+          "nameEn": "Potato Croquette",
+          "price": "€1.00"
+        }
+      ]
+    }
+  ]
+}
