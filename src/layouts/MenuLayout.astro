@@ -1,0 +1,68 @@
+---
+import "../styles/global.css";
+import SmoothScroll from "../components/SmoothScroll.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title = "Menu | La Marinella",
+  description = "Il menu completo de La Marinella: caffetteria, dolci, panini, birre, cocktails, vini, distillati, gelateria e rosticceria.",
+  lang = "it",
+} = Astro.props;
+
+const siteUrl = "https://gelaterialamarinella.it";
+const ogImage = `${siteUrl}/brand%20assets/logo%20completo%20img.avif`;
+const canonicalURL = lang === "en" ? `${siteUrl}/en/menu` : `${siteUrl}/menu`;
+---
+
+<!doctype html>
+<html lang={lang} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/brand assets/favicon/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/brand assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand assets/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand assets/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/brand assets/favicon/site.webmanifest" />
+    <meta name="theme-color" content="#0c0c0c" />
+
+    <!-- Canonical + Hreflang -->
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="it" href={`${siteUrl}/menu`} />
+    <link rel="alternate" hreflang="en" href={`${siteUrl}/en/menu`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteUrl}/menu`} />
+
+    <!-- Open Graph / Google -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "it_IT"} />
+    <meta property="og:site_name" content="La Marinella" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <title>{title}</title>
+  </head>
+  <body class="overflow-x-hidden bg-background text-text">
+    <div id="page-content" class="min-h-screen">
+      <slot />
+    </div>
+    <SmoothScroll />
+  </body>
+</html>

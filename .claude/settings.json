@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/Impre/Desktop/la marinella - sito web/.agents/skills/**)",
+      "Bash(done)",
+      "Read(//c/Users/Impre/Desktop/la marinella - sito web/.agents/skills/$f/**)",
+      "Bash(xargs ls:*)"
+    ]
+  }
+}

@@ -1,0 +1,159 @@
+---
+import { Image } from "astro:assets";
+
+interface MenuItem {
+    name: string;
+    nameEn?: string;
+    description?: string;
+    descriptionEn?: string;
+    price: string;
+    image?: string;
+    badge?: string;
+}
+
+interface Props {
+    item: MenuItem;
+    lang: "it" | "en";
+    imageLayout: "large" | "small";
+    showBorder: boolean;
+}
+
+const { item, lang, imageLayout, showBorder } = Astro.props;
+
+const getLocal = (itStr: string, enStr?: string) =>
+    lang === "en" && enStr ? enStr : itStr;
+
+// Badge: label e classe CSS per ciascun tipo
+const badgeConfig: Record<string, { it: string; en: string; cssClass: string }> = {
+    new:     { it: "Novità",          en: "New",            cssClass: "badge-new"     },
+    popular: { it: "Molto Richiesto", en: "Most Requested", cssClass: "badge-popular" },
+    limited: { it: "Limitato",        en: "Limited",        cssClass: "badge-limited" },
+};
+
+const badge     = item.badge ? badgeConfig[item.badge] : null;
+const badgeLabel = badge ? (lang === "en" ? badge.en : badge.it) : null;
+---
+
+<div
+    class={`menu-item-card group relative flex flex-col py-6 md:py-8 transition-colors duration-500 ${showBorder ? "border-b border-(--color-card-border)" : ""}`}
+>
+    {/* Layout A: immagine grande in cima */}
+    {imageLayout === "large" && item.image && (
+        <div
+            class="relative w-full aspect-square overflow-hidden mb-6 bg-(--color-menu-container) cursor-pointer"
+            onclick={`openLightbox('${item.image}')`}
+        >
+            <Image
+                src={item.image}
+                alt={getLocal(item.name, item.nameEn)}
+                width={600}
+                height={600}
+                class="item-img w-full h-full object-cover transition-transform duration-700"
+                loading="lazy"
+            />
+        </div>
+    )}
+
+    <div class="relative z-10 px-4 md:px-6 mb-2 flex flex-row gap-5 md:gap-8 items-start">
+        {/* Layout B: immagine piccola a sinistra */}
+        {imageLayout === "small" && item.image && (
+            <div
+                class="shrink-0 w-20 h-20 md:w-28 md:h-28 overflow-hidden bg-background cursor-pointer"
+                onclick={`openLightbox('${item.image}')`}
+            >
+                <Image
+                    src={item.image}
+                    alt={getLocal(item.name, item.nameEn)}
+                    width={200}
+                    height={200}
+                    class="item-img w-full h-full object-cover transition-transform duration-700"
+                    loading="lazy"
+                />
+            </div>
+        )}
+
+        {/* Testo: badge, nome, prezzo, descrizione */}
+        <div class="flex flex-col justify-start grow">
+            {/* Badge */}
+            {badge && badgeLabel && (
+                <span class={`item-badge ${badge.cssClass}`}>
+                    {badgeLabel}
+                </span>
+            )}
+
+            <div class="flex justify-between items-baseline gap-4 mb-2">
+                <h4 class="item-title font-display font-medium text-xl md:text-2xl leading-tight text-text transition-colors">
+                    {getLocal(item.name, item.nameEn)}
+                </h4>
+                <div class="grow border-b border-dotted border-(--color-card-border) mx-4 relative top-[-6px] hidden sm:block" />
+                <span class="font-display font-medium text-xl md:text-2xl text-accent shrink-0">
+                    {item.price}
+                </span>
+            </div>
+            {(item.description || item.descriptionEn) && (
+                <p class="text-text/70 text-sm md:text-base font-light leading-relaxed max-w-2xl mt-1">
+                    {getLocal(item.description!, item.descriptionEn)}
+                </p>
+            )}
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ─── Badge ─── */
+    .item-badge {
+        display: inline-block;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        padding: 0.2rem 0.5rem;
+        border: 1px solid;
+        font-weight: 600;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+        align-self: flex-start;
+    }
+
+    /* Novità — accent (marrone-oro del brand) */
+    .badge-new {
+        color: var(--color-accent);
+        border-color: color-mix(in srgb, var(--color-accent) 45%, transparent);
+    }
+
+    /* Molto Richiesto — verde del brand */
+    .badge-popular {
+        color: #7b7b54;
+        border-color: rgba(123, 123, 84, 0.45);
+    }
+    :global(.dark) .badge-popular {
+        color: #b4b47e;
+        border-color: rgba(180, 180, 126, 0.45);
+    }
+
+    /* Limitato — verde muted */
+    .badge-limited {
+        color: #7b7b54;
+        border-color: rgba(123, 123, 84, 0.3);
+        opacity: 0.85;
+    }
+    :global(.dark) .badge-limited {
+        color: #a0a06e;
+        border-color: rgba(160, 160, 110, 0.35);
+    }
+
+    /* ─── Hover: solo su dispositivi con mouse (non touch) ─── */
+    @media (hover: hover) and (pointer: fine) {
+        .menu-item-card:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+        }
+        :global(.dark) .menu-item-card:hover {
+            background-color: rgba(255, 255, 255, 0.04);
+        }
+        .menu-item-card:hover .item-title {
+            color: var(--color-accent);
+        }
+        .menu-item-card:hover .item-img {
+            transform: scale(1.05);
+        }
+    }
+</style>

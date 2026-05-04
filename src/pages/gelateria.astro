@@ -9,19 +9,23 @@ import FullScreenSlider from '../components/FullScreenSlider.astro';
 // Image paths
 const flavorImages = {
   ananas: "/images/gelateria-img/gusti%20gelato/ananas.avif",
-  buenoBianco: "/images/gelateria-img/gusti%20gelato/bueno%20bianco_20250618044154.avif",
+  buenoBianco: "/images/gelateria-img/gusti%20gelato/bueno%20bianco.avif",
   caramelloSalato: "/images/gelateria-img/gusti%20gelato/caramello%20salato_20250618044155.avif",
   cheesecake: "/images/gelateria-img/gusti%20gelato/cheescake_20250618044155.avif",
   cocco: "/images/gelateria-img/gusti%20gelato/cocco_20250618044156.avif",
+  ferreroRocher: "/images/gelateria-img/gusti%20gelato/ferrero%20rocher.avif",
   fiorDiLatte: "/images/gelateria-img/gusti%20gelato/fior%20di%20latte_20250618044156.avif",
   fondente: "/images/gelateria-img/gusti%20gelato/fondente_20250618044156.avif",
   fragola: "/images/gelateria-img/gusti%20gelato/fragola.avif",
-  limone: "/images/gelateria-img/gusti%20gelato/limone_20250618044157.avif",
+  kinderBueno: "/images/gelateria-img/gusti%20gelato/kinder%20bueno.avif",
+  kinderCereali: "/images/gelateria-img/gusti%20gelato/kinder%20cereali.avif",
+  limone: "/images/gelateria-img/gusti%20gelato/limone.avif",
   melone: "/images/gelateria-img/gusti%20gelato/melone_20250618044157.avif",
   nutella: "/images/gelateria-img/gusti%20gelato/nutella_20250618044158.avif",
   pistacchio: "/images/gelateria-img/gusti%20gelato/pistacchio_20250618044152.avif",
-  tiramisu: "/images/gelateria-img/gusti%20gelato/tiramisù_20250618044153.avif",
-  yogurt: "/images/gelateria-img/gusti%20gelato/yougurt_20250618044153.avif",
+  stracciatella: "/images/gelateria-img/gusti%20gelato/stracciatella.avif",
+  tiramisu: "/images/gelateria-img/gusti%20gelato/tiramis%C3%B9_20250618044153.avif",
+  yogurt: "/images/gelateria-img/gusti%20gelato/yogurt.avif",
   zuppaInglese: "/images/gelateria-img/gusti%20gelato/zuppa%20inglese_20250618044154.avif",
 };
 
@@ -31,14 +35,18 @@ const flavors = [
   { name: "Caramello Salato", image: flavorImages.caramelloSalato },
   { name: "Cheesecake", image: flavorImages.cheesecake },
   { name: "Cocco", image: flavorImages.cocco },
+  { name: "Ferrero Rocher", image: flavorImages.ferreroRocher },
   { name: "Fior di Latte", image: flavorImages.fiorDiLatte },
   { name: "Fondente", image: flavorImages.fondente },
   { name: "Fragola", image: flavorImages.fragola },
+  { name: "Kinder Bueno", image: flavorImages.kinderBueno },
+  { name: "Kinder Cereali", image: flavorImages.kinderCereali },
   { name: "Limone", image: flavorImages.limone },
   { name: "Melone", image: flavorImages.melone },
   { name: "Nutella", image: flavorImages.nutella },
   { name: "Pistacchio", image: flavorImages.pistacchio },
-  { name: "Tiramisu", image: flavorImages.tiramisu },
+  { name: "Stracciatella", image: flavorImages.stracciatella },
+  { name: "Tiramisù", image: flavorImages.tiramisu },
   { name: "Yogurt", image: flavorImages.yogurt },
   { name: "Zuppa Inglese", image: flavorImages.zuppaInglese },
 ];
@@ -78,23 +86,26 @@ const flavors = [
       <div class="container-custom">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {flavors.map((flavor, index) => (
-            <div 
+            <div
               class="group relative aspect-square overflow-hidden rounded-sm reveal-on-scroll opacity-0 cursor-pointer"
               style={`transition-delay: ${(index % 4) * 50}ms`}
             >
               <!-- Background Image -->
-              <img 
-                src={flavor.image} 
+              <img
+                src={flavor.image}
                 alt={`Gusto ${flavor.name}`}
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              
-              <!-- Overlay -->
-              <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-90"></div>
-              
-              <!-- Content -->
-              <div class="absolute inset-0 flex items-center justify-center p-4 text-center">
-                <h4 class="text-white font-serif text-xl md:text-2xl tracking-wide transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
+
+              <!-- Overlay gradient - più forte in basso dove sta il testo -->
+              <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/5 transition-opacity duration-500 group-hover:from-black/95 group-hover:via-black/50"></div>
+
+              <!-- Nome in basso, allineato al gradiente -->
+              <div class="absolute bottom-0 left-0 right-0 p-4 md:p-5 transform translate-y-1 transition-transform duration-500 group-hover:translate-y-0">
+                <h4
+                  class="text-white font-serif text-lg md:text-xl lg:text-2xl tracking-wide leading-tight"
+                  style="text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 4px 24px rgba(0,0,0,0.7);"
+                >
                   {flavor.name}
                 </h4>
               </div>

@@ -12,11 +12,15 @@ interface Props {
 }
 
 const {
-  title = "La Marinella - Gelateria Pasticceria Artigianale",
-  description = "Dal 2006 creiamo gelati e dolci artigianali con passione. Tradizione, qualità e sapori autentici.",
+  title = "La Marinella | Gelateria e Pasticceria Artigianale",
+  description = "Dal 2006 creiamo gelati e dolci artigianali con passione. Tradizione, qualità e sapori autentici a Zambrone Marina.",
   lang = "it",
   showPrivacyManager = true,
 } = Astro.props;
+
+const siteUrl = "https://gelaterialamarinella.it";
+const ogImage = `${siteUrl}/brand%20assets/logo%20completo%20img.avif`;
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
 ---
 
 <!doctype html>
@@ -26,32 +30,81 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/brand assets/favicon.svg" />
-    <link rel="icon" type="image/svg+xml" href="/brand assets/favicon.svg" />
-    <title>{title}</title>
-    <!-- Dark Mode Init -->
-    <script is:inline>
-      function initTheme() {
-        const isMenuPage = window.location.pathname.startsWith("/menu");
-        if (
-          isMenuPage &&
-          (localStorage.theme === "dark" ||
-            (!("theme" in localStorage) &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches))
-        ) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-      }
 
-      initTheme();
-      document.addEventListener("astro:after-swap", initTheme);
-      document.addEventListener("astro:page-load", initTheme);
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/brand assets/favicon/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/brand assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand assets/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand assets/favicon/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand assets/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/brand assets/favicon/site.webmanifest" />
+    <meta name="theme-color" content="#0c0c0c" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Google -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "it_IT"} />
+    <meta property="og:site_name" content="La Marinella" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <title>{title}</title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["FoodEstablishment", "IceCreamShop", "Bakery"],
+      "name": "La Marinella",
+      "description": "Gelateria e pasticceria artigianale dal 2006 a Zambrone Marina, sulla Costa degli Dei. Gelato fresco ogni giorno con ingredienti selezionati.",
+      "url": siteUrl,
+      "logo": `${siteUrl}/brand%20assets/logo%20completo%20img.avif`,
+      "image": `${siteUrl}/brand%20assets/logo%20completo%20img.avif`,
+      "telephone": "+393456461131",
+      "email": "info@gelaterialamarinella.it",
+      "priceRange": "€",
+      "servesCuisine": ["Gelato Artigianale", "Pasticceria Italiana", "Caffetteria"],
+      "hasMenu": `${siteUrl}/menu`,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Scalo FF.SS. snc",
+        "addressLocality": "Zambrone",
+        "addressRegion": "Calabria",
+        "postalCode": "89868",
+        "addressCountry": "IT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "38.7259",
+        "longitude": "15.9879"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "07:00",
+        "closes": "23:00"
+      }],
+      "sameAs": []
+    })} />
+
+    <!-- Il sito principale è sempre in modalità chiara -->
+    <script is:inline>
+      document.documentElement.classList.remove("dark");
     </script>
   </head>
   <body
-    class="overflow-x-hidden bg-background text-text transition-colors duration-500"
+    class="overflow-x-hidden bg-background text-text"
   >
     <div
       id="page-content"
@@ -64,6 +117,7 @@ const {
     {
       showPrivacyManager && (
         <script
+          is:inline
           type="text/javascript"
           src="https://embeds.iubenda.com/widgets/2be2277d-f6b0-4a76-850e-36cfb3b9d241.js"
           async

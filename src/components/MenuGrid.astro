@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import MenuItemCard from "./MenuItemCard.astro";
 
 interface MenuItem {
     name: string;
@@ -18,14 +18,22 @@ interface Subcategory {
     items: MenuItem[];
 }
 
+interface Flavor {
+    name: string;
+    nameEn?: string;
+    type: "crema" | "frutta";
+    image?: string;
+    limited?: boolean;
+}
+
 interface Category {
     id: string;
     title: string;
     titleEn?: string;
-    icon?: string;
-    style?: string;
-    backgroundImage?: string;
+    imageLayout?: "large" | "small";
     special?: boolean;
+    headerImages?: string[];
+    flavors?: Flavor[];
     subcategories?: Subcategory[];
     items?: MenuItem[];
 }
@@ -37,14 +45,13 @@ interface Props {
 
 const { menuCategories, lang } = Astro.props;
 
-// Helper to get localized string
 const getLocal = (itStr: string, enStr?: string) =>
     lang === "en" && enStr ? enStr : itStr;
 ---
 
 <!-- Top Navigation (Horizontal Scroll Cards) -->
 <div
-    class="fixed top-[72px] md:top-[88px] left-0 right-0 w-full z-40 bg-(--color-menu-container)/95 backdrop-blur-md border-b border-(--color-card-border) py-1 shadow-sm transition-colors duration-500"
+    class="fixed top-[72px] md:top-[88px] left-0 right-0 w-full z-40 bg-[#f9fafb]/95 backdrop-blur-md border-t border-b border-black/5 shadow-sm py-1 transition-colors duration-500"
     id="top-nav"
 >
     <div class="flex overflow-x-auto px-4 md:px-8 no-scrollbar items-center">
@@ -52,7 +59,7 @@ const getLocal = (itStr: string, enStr?: string) =>
             menuCategories.map((cat) => (
                 <a
                     href={`#category-${cat.id}`}
-                    class="nav-tab shrink-0 px-5 md:px-6 py-4 uppercase tracking-widest text-[0.65rem] md:text-[0.75rem] font-light md:font-medium text-text/80 hover:text-text relative transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px after:bg-accent after:origin-left after:transition-transform after:duration-500 after:ease-out after:scale-x-0 hover:after:scale-x-100"
+                    class="nav-tab shrink-0 px-5 md:px-6 py-4 uppercase tracking-widest text-[0.65rem] md:text-[0.75rem] font-medium text-black/60 hover:text-black relative transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-accent after:origin-left after:transition-transform after:duration-500 after:ease-out after:scale-x-0 hover:after:scale-x-100"
                 >
                     {getLocal(cat.title, cat.titleEn)}
                 </a>
@@ -61,295 +68,312 @@ const getLocal = (itStr: string, enStr?: string) =>
     </div>
 </div>
 
-<main class="bg-(--color-menu-container) pb-32 transition-colors duration-500">
+<main
+    class="bg-(--color-menu-container) pb-32 transition-colors duration-500 overflow-x-hidden"
+>
     <!-- Hero Header -->
-    <header
-        class="pt-[160px] md:pt-[180px] pb-16 md:pb-24 text-center px-4 relative overflow-hidden"
-    >
-        <!-- Background Pattern -->
-        <div
-            class="absolute inset-0 opacity-[0.03] dark:opacity-[0.015] pointer-events-none"
-            style="background-image: url('/brand assets/pattern chamoisee.svg'); background-size: 600px;"
-        >
-        </div>
-        <div
-            class="z-10 hidden dark:block absolute inset-0 bg-background/50 pointer-events-none"
-        >
-        </div>
-        <div class="relative z-20">
-            <h1
-                class="text-5xl md:text-7xl font-display font-medium mb-4 animate-fade-in-up"
-            >
-                {lang === "it" ? "Il Nostro " : "Our "}
-                <span class="text-accent italic font-serif">Menu</span>
+    <header class="pt-[180px] md:pt-[220px] pb-12 md:pb-16 px-4 bg-(--color-menu-container)">
+        <div class="max-w-2xl mx-auto text-center flex flex-col items-center animate-fade-in-up">
+            <p class="text-[0.65rem] uppercase tracking-[0.3em] text-accent font-medium mb-4">
+                La Marinella
+            </p>
+            <h1 class="font-display text-5xl md:text-6xl text-text font-light mb-6 leading-tight">
+                {lang === "it" ? "Il Nostro Menu" : "Our Menu"}
             </h1>
-            <p
-                class="text-text/60 max-w-lg mx-auto animate-fade-in-up [animation-delay:100ms] text-lg"
-            >
+            <p class="text-sm md:text-base text-text/60 font-light leading-relaxed max-w-lg mb-10">
                 {
                     lang === "it"
-                        ? "Esplora le nostre specialità in un'interfaccia pensata per farti venire l'acquolina in bocca."
-                        : "Explore our specialties in an interface designed to make your mouth water."
+                        ? "Siamo lieti di accogliervi. In caso di allergie o intolleranze alimentari, vi preghiamo di avvisare il personale prima di ordinare."
+                        : "We are delighted to welcome you. For food allergies or intolerances, please inform our staff before ordering."
                 }
             </p>
-            <div
-                class="animate-fade-in-up [animation-delay:200ms] text-center text-text/60 mt-8 px-4"
-            >
-                <span
-                    class="text-[0.65rem] md:text-xs uppercase tracking-widest font-medium"
-                >
-                    {
-                        lang === "it"
-                            ? "Per allergie o intolleranze, avvisa il personale"
-                            : "For allergies or intolerances, please ask the staff"
-                    }
-                </span>
-            </div>
+            
+            <div class="w-10 h-[1px] bg-accent/40"></div>
         </div>
     </header>
 
-    <div class="container-custom">
+    <div class="container-custom pt-4 md:pt-8">
         <div class="flex flex-col gap-20 max-w-5xl mx-auto">
             {
-                menuCategories.map((category) => (
-                    <section
-                        id={`category-${category.id}`}
-                        class="menu-section-preview scroll-mt-[150px] md:scroll-mt-[170px]"
-                    >
-                        <div class="mb-10 flex items-center justify-between border-b border-(--color-card-border) pb-4">
-                            <h2 class="text-4xl md:text-5xl font-display font-medium text-text">
-                                {getLocal(category.title, category.titleEn)}
-                            </h2>
-                            {category.special && (
-                                <span class="bg-accent/10 text-accent px-3 py-1 text-xs font-bold uppercase rounded-full tracking-wider">
-                                    {lang === "it"
-                                        ? "Scelta Top"
-                                        : "Top Choice"}
-                                </span>
-                            )}
-                        </div>
-
-                        {category.subcategories ? (
-                            <div class="flex flex-col gap-12">
-                                {category.subcategories.map((sub) => (
-                                    <div>
-                                        <h3 class="text-2xl font-serif text-accent mb-6 flex items-center gap-4">
-                                            {getLocal(sub.title, sub.titleEn)}
-                                            {sub.priceHeader && (
-                                                <span class="text-xs text-text/50 uppercase tracking-widest font-sans ml-auto">
-                                                    {getLocal(
-                                                        sub.priceHeader,
-                                                        sub.priceHeaderEn,
-                                                    )}
-                                                </span>
-                                            )}
-                                        </h3>
-
-                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
-                                            {sub.items.map((item, index) => {
-                                                const hasImage = !!item.image;
-
-                                                return (
-                                                    <div
-                                                        class={`group relative flex flex-col py-6 md:py-8 transition-colors duration-500 hover:bg-black/5 dark:hover:bg-white/5 ${index !== sub.items.length - 1 ? "border-b border-(--color-card-border)" : ""}`}
-                                                    >
-                                                        {/* Layout A: Large Square Image at the top for specific categories */}
-                                                        {[
-                                                            "panini",
-                                                            "dolci",
-                                                            "gelateria",
-                                                        ].includes(
-                                                            category.id,
-                                                        ) &&
-                                                            hasImage && (
-                                                                <div
-                                                                    class="relative w-full aspect-square overflow-hidden mb-6 bg-(--color-menu-container) cursor-pointer"
-                                                                    onclick={`openLightbox('${item.image}')`}
-                                                                >
-                                                                    <Image
-                                                                        src={
-                                                                            item.image!
-                                                                        }
-                                                                        alt={getLocal(
-                                                                            item.name,
-                                                                            item.nameEn,
-                                                                        )}
-                                                                        width={
-                                                                            600
-                                                                        }
-                                                                        height={
-                                                                            600
-                                                                        }
-                                                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                                                        loading="lazy"
-                                                                    />
-                                                                </div>
-                                                            )}
-
-                                                        {/* Container for content and optional Layout B image */}
-                                                        <div class="relative z-10 px-4 md:px-6 mb-2 flex flex-row gap-5 md:gap-8 items-start">
-                                                            {/* Layout B: Small Image on the left for all other categories */}
-                                                            {![
-                                                                "panini",
-                                                                "dolci",
-                                                                "gelateria",
-                                                            ].includes(
-                                                                category.id,
-                                                            ) &&
-                                                                hasImage && (
-                                                                    <div
-                                                                        class="shrink-0 w-20 h-20 md:w-28 md:h-28 overflow-hidden bg-background cursor-pointer"
-                                                                        onclick={`openLightbox('${item.image}')`}
-                                                                    >
-                                                                        <Image
-                                                                            src={
-                                                                                item.image!
-                                                                            }
-                                                                            alt={getLocal(
-                                                                                item.name,
-                                                                                item.nameEn,
-                                                                            )}
-                                                                            width={
-                                                                                200
-                                                                            }
-                                                                            height={
-                                                                                200
-                                                                            }
-                                                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                                                            loading="lazy"
-                                                                        />
-                                                                    </div>
-                                                                )}
-
-                                                            {/* Content Section */}
-                                                            <div class="flex flex-col justify-start grow">
-                                                                <div class="flex justify-between items-baseline gap-4 mb-2">
-                                                                    <h4 class="font-display font-medium text-xl md:text-2xl leading-tight text-text group-hover:text-accent transition-colors">
-                                                                        {getLocal(
-                                                                            item.name,
-                                                                            item.nameEn,
-                                                                        )}
-                                                                    </h4>
-                                                                    <div class="grow border-b border-dotted border-(--color-card-border) mx-4 relative top-[-6px] hidden sm:block" />
-                                                                    <span class="font-display font-medium text-xl md:text-2xl text-accent shrink-0">
-                                                                        {
-                                                                            item.price
-                                                                        }
-                                                                    </span>
-                                                                </div>
-                                                                {(item.description ||
-                                                                    item.descriptionEn) && (
-                                                                    <p class="text-text/70 text-sm md:text-base font-light leading-relaxed max-w-2xl mt-1">
-                                                                        {getLocal(
-                                                                            item.description!,
-                                                                            item.descriptionEn,
-                                                                        )}
-                                                                    </p>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
+                menuCategories.map((category) => {
+                    const imageLayout = category.imageLayout ?? "small";
+                    return (
+                        <section
+                            id={`category-${category.id}`}
+                            class="menu-section-preview scroll-mt-[150px] md:scroll-mt-[170px]"
+                        >
+                            {/* Intestazione sezione */}
+                            {category.headerImages &&
+                            category.headerImages.length > 1 ? (
+                                /* ── Header con slider immagini (2+ foto) ── */
+                                <div
+                                    class="relative mb-10 h-[120px] md:h-[150px]"
+                                    style="margin-right: calc(-50vw + 50%)"
+                                >
+                                    {/* Layer 1 — strip immagini a destra, bleed fino al bordo schermo */}
+                                    <div
+                                        class="absolute top-0 bottom-0 right-0 overflow-hidden"
+                                        style="left: 42%"
+                                        aria-hidden="true"
+                                    >
+                                        {/* Gradiente di fusione sul bordo sinistro dello strip */}
+                                        <div
+                                            class="absolute inset-y-0 left-0 w-16 md:w-24 z-10 pointer-events-none"
+                                            style="background: linear-gradient(to right, var(--color-menu-container), transparent)"
+                                            aria-hidden="true"
+                                        />
+                                        <div class="slide-track">
+                                            {[
+                                                ...category.headerImages,
+                                                ...category.headerImages,
+                                            ].map((src) => (
+                                                <img
+                                                    src={src}
+                                                    alt=""
+                                                    aria-hidden="true"
+                                                    style="height:100%;width:200px;object-fit:cover;flex-shrink:0"
+                                                    loading="lazy"
+                                                />
+                                            ))}
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6">
-                                {category.items?.map((item, index) => {
-                                    const hasImage = !!item.image;
 
-                                    return (
-                                        <div
-                                            class={`group relative flex flex-col py-6 md:py-8 transition-colors duration-500 hover:bg-black/5 dark:hover:bg-white/5 ${index !== (category.items?.length || 0) - 1 ? "border-b border-(--color-card-border)" : ""}`}
-                                        >
-                                            {/* Layout A: Large Square Image at the top for specific categories */}
-                                            {[
-                                                "panini",
-                                                "dolci",
-                                                "gelateria",
-                                            ].includes(category.id) &&
-                                                hasImage && (
-                                                    <div
-                                                        class="relative w-full aspect-square overflow-hidden mb-6 bg-(--color-menu-container) cursor-pointer"
-                                                        onclick={`openLightbox('${item.image}')`}
+                                    {/* Layer 2 — testo e controlli, sinistra */}
+                                    <div
+                                        class="relative z-20 flex flex-col justify-center gap-3 py-4 md:py-5 h-[120px] md:h-[150px]"
+                                        style="max-width: 48%"
+                                    >
+                                        <h2 class="text-4xl md:text-5xl font-display font-medium text-text leading-tight">
+                                            {getLocal(
+                                                category.title,
+                                                category.titleEn,
+                                            )}
+                                        </h2>
+                                        <div class="flex items-center gap-3 flex-wrap">
+                                            {category.special && (
+                                                <span class="bg-accent/10 text-accent px-3 py-1 text-xs font-bold uppercase rounded-full tracking-wider">
+                                                    {lang === "it"
+                                                        ? "Scelta Top"
+                                                        : "Top Choice"}
+                                                </span>
+                                            )}
+                                            {category.flavors &&
+                                                category.flavors.length > 0 && (
+                                                    <button
+                                                        type="button"
+                                                        data-flavors-category={
+                                                            category.id
+                                                        }
+                                                        class="flavors-btn flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-xs uppercase tracking-widest font-semibold hover:bg-accent/85 active:bg-accent/70 transition-colors duration-150 shadow-md"
                                                     >
-                                                        <Image
-                                                            src={item.image!}
-                                                            alt={getLocal(
-                                                                item.name,
-                                                                item.nameEn,
-                                                            )}
-                                                            width={600}
-                                                            height={600}
-                                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                                            loading="lazy"
-                                                        />
-                                                    </div>
-                                                )}
-
-                                            {/* Container for content and optional Layout B image */}
-                                            <div class="relative z-10 px-4 md:px-6 mb-2 flex flex-row gap-5 md:gap-8 items-start">
-                                                {/* Layout B: Small Image on the left for all other categories */}
-                                                {![
-                                                    "panini",
-                                                    "dolci",
-                                                    "gelateria",
-                                                ].includes(category.id) &&
-                                                    hasImage && (
-                                                        <div
-                                                            class="shrink-0 w-20 h-20 md:w-28 md:h-28 overflow-hidden bg-background cursor-pointer"
-                                                            onclick={`openLightbox('${item.image}')`}
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-3.5 w-3.5 shrink-0"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
                                                         >
-                                                            <Image
-                                                                src={
-                                                                    item.image!
-                                                                }
-                                                                alt={getLocal(
-                                                                    item.name,
-                                                                    item.nameEn,
-                                                                )}
-                                                                width={200}
-                                                                height={200}
-                                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                                                                loading="lazy"
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
                                                             />
-                                                        </div>
-                                                    )}
+                                                        </svg>
+                                                        {lang === "it"
+                                                            ? "Gusti"
+                                                            : "Flavors"}
+                                                    </button>
+                                                )}
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : category.headerImages &&
+                              category.headerImages.length === 1 ? (
+                                /* ── Header con foto fissa (1 foto) ── */
+                                <div
+                                    class="relative mb-10 h-[120px] md:h-[150px]"
+                                    style="margin-right: calc(-50vw + 50%)"
+                                >
+                                    {/* Foto fissa a destra */}
+                                    <div
+                                        class="absolute top-0 bottom-0 right-0 overflow-hidden"
+                                        style="left: 42%"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                            class="absolute inset-y-0 left-0 w-16 md:w-24 z-10 pointer-events-none"
+                                            style="background: linear-gradient(to right, var(--color-menu-container), transparent)"
+                                            aria-hidden="true"
+                                        />
+                                        <img
+                                            src={category.headerImages[0]}
+                                            alt=""
+                                            aria-hidden="true"
+                                            class="w-full h-full object-cover"
+                                            loading="lazy"
+                                        />
+                                    </div>
 
-                                                {/* Content Section */}
-                                                <div class="flex flex-col justify-start grow">
-                                                    <div class="flex justify-between items-baseline gap-4 mb-2">
-                                                        <h4 class="font-display font-medium text-xl md:text-2xl leading-tight text-text group-hover:text-accent transition-colors">
-                                                            {getLocal(
-                                                                item.name,
-                                                                item.nameEn,
-                                                            )}
-                                                        </h4>
-                                                        <div class="grow border-b border-dotted border-(--color-card-border) mx-4 relative top-[-6px] hidden sm:block" />
-                                                        <span class="font-display font-medium text-xl md:text-2xl text-accent shrink-0">
-                                                            {item.price}
-                                                        </span>
-                                                    </div>
-                                                    {(item.description ||
-                                                        item.descriptionEn) && (
-                                                        <p class="text-text/70 text-sm md:text-base font-light leading-relaxed max-w-2xl mt-1">
-                                                            {getLocal(
-                                                                item.description!,
-                                                                item.descriptionEn,
-                                                            )}
-                                                        </p>
-                                                    )}
-                                                </div>
+                                    {/* Testo e controlli, sinistra */}
+                                    <div
+                                        class="relative z-20 flex flex-col justify-center gap-3 py-4 md:py-5 h-[120px] md:h-[150px]"
+                                        style="max-width: 48%"
+                                    >
+                                        <h2 class="text-4xl md:text-5xl font-display font-medium text-text leading-tight">
+                                            {getLocal(
+                                                category.title,
+                                                category.titleEn,
+                                            )}
+                                        </h2>
+                                        <div class="flex items-center gap-3 flex-wrap">
+                                            {category.special && (
+                                                <span class="bg-accent/10 text-accent px-3 py-1 text-xs font-bold uppercase rounded-full tracking-wider">
+                                                    {lang === "it"
+                                                        ? "Scelta Top"
+                                                        : "Top Choice"}
+                                                </span>
+                                            )}
+                                            {category.flavors &&
+                                                category.flavors.length > 0 && (
+                                                    <button
+                                                        type="button"
+                                                        data-flavors-category={
+                                                            category.id
+                                                        }
+                                                        class="flavors-btn flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-xs uppercase tracking-widest font-semibold hover:bg-accent/85 active:bg-accent/70 transition-colors duration-150 shadow-md"
+                                                    >
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            class="h-3.5 w-3.5 shrink-0"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
+                                                            />
+                                                        </svg>
+                                                        {lang === "it"
+                                                            ? "Gusti"
+                                                            : "Flavors"}
+                                                    </button>
+                                                )}
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                /* ── Header semplice (tutte le altre categorie) ── */
+                                <div class="mb-10 flex flex-wrap items-center gap-4 justify-between border-b border-(--color-card-border) pb-4">
+                                    <h2 class="text-4xl md:text-5xl font-display font-medium text-text">
+                                        {getLocal(
+                                            category.title,
+                                            category.titleEn,
+                                        )}
+                                    </h2>
+                                    <div class="flex items-center gap-3">
+                                        {category.special && (
+                                            <span class="bg-accent/10 text-accent px-3 py-1 text-xs font-bold uppercase rounded-full tracking-wider">
+                                                {lang === "it"
+                                                    ? "Scelta Top"
+                                                    : "Top Choice"}
+                                            </span>
+                                        )}
+                                        {category.flavors &&
+                                            category.flavors.length > 0 && (
+                                                <button
+                                                    type="button"
+                                                    data-flavors-category={
+                                                        category.id
+                                                    }
+                                                    class="flavors-btn flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-xs uppercase tracking-widest font-semibold hover:bg-accent/85 active:bg-accent/70 transition-colors duration-150 shadow-md"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        class="h-3.5 w-3.5 shrink-0"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        stroke-width="2"
+                                                    >
+                                                        <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"
+                                                        />
+                                                    </svg>
+                                                    {lang === "it"
+                                                        ? "Gusti disponibili"
+                                                        : "Available Flavors"}
+                                                </button>
+                                            )}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Items con subcategorie */}
+                            {category.subcategories ? (
+                                <div class="flex flex-col gap-12">
+                                    {category.subcategories.map((sub) => (
+                                        <div>
+                                            <h3 class="text-2xl font-serif text-accent mb-6 flex items-center gap-4">
+                                                {getLocal(
+                                                    sub.title,
+                                                    sub.titleEn,
+                                                )}
+                                                {sub.priceHeader && (
+                                                    <span class="text-xs text-text/50 uppercase tracking-widest font-sans ml-auto">
+                                                        {getLocal(
+                                                            sub.priceHeader,
+                                                            sub.priceHeaderEn,
+                                                        )}
+                                                    </span>
+                                                )}
+                                            </h3>
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                                                {sub.items.map(
+                                                    (item, index) => (
+                                                        <MenuItemCard
+                                                            item={item}
+                                                            lang={lang}
+                                                            imageLayout={
+                                                                imageLayout
+                                                            }
+                                                            showBorder={
+                                                                index <
+                                                                    sub.items
+                                                                        .length -
+                                                                        1 ||
+                                                                sub.items
+                                                                    .length %
+                                                                    2 !==
+                                                                    0
+                                                            }
+                                                        />
+                                                    ),
+                                                )}
                                             </div>
                                         </div>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </section>
-                ))
+                                    ))}
+                                </div>
+                            ) : (
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+                                    {category.items?.map((item) => (
+                                        <MenuItemCard
+                                            item={item}
+                                            lang={lang}
+                                            imageLayout={imageLayout}
+                                            showBorder={true}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </section>
+                    );
+                })
             }
         </div>
     </div>
@@ -386,11 +410,11 @@ const getLocal = (itStr: string, enStr?: string) =>
 <!-- Lightbox Modal -->
 <div
     id="lightbox-modal"
-    class="fixed inset-0 z-2000 bg-black/90 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 md:p-12 cursor-zoom-out backdrop-blur-sm"
+    class="fixed inset-0 z-[2000] bg-black/90 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 md:p-12 cursor-zoom-out backdrop-blur-sm"
     onclick="closeLightbox()"
 >
     <button
-        class="absolute top-6 right-6 text-white bg-black/50 hover:bg-black/80 rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-lg border border-white/20 z-2010"
+        class="absolute top-6 right-6 text-white bg-black/50 hover:bg-black/80 rounded-full w-10 h-10 flex items-center justify-center transition-colors shadow-lg border border-white/20 z-[2010]"
         aria-label={lang === "it" ? "Chiudi" : "Close"}
     >
         <svg
@@ -407,14 +431,77 @@ const getLocal = (itStr: string, enStr?: string) =>
                 d="M6 18L18 6M6 6l12 12"></path>
         </svg>
     </button>
-
     <img
         id="lightbox-img"
         src=""
         alt="Ingrandimento"
         class="max-w-full max-h-full object-contain scale-95 transition-transform duration-300 shadow-2xl rounded-lg"
-        onclick="(e) => e.stopPropagation()"
     />
+</div>
+
+<!-- Modal Gusti Gelato -->
+<div
+    id="flavors-modal"
+    class="fixed inset-0 z-[2000] bg-black/75 opacity-0 pointer-events-none transition-opacity duration-300 flex items-end md:items-center justify-center backdrop-blur-sm"
+>
+    <div
+        id="flavors-panel"
+        class="relative w-full md:max-w-2xl max-h-[92vh] md:max-h-[85vh] bg-(--color-menu-container) border border-(--color-card-border) shadow-2xl flex flex-col translate-y-4 md:translate-y-0 md:scale-95 transition-transform duration-300 overflow-hidden md:rounded-sm"
+    >
+        <!-- Header modal -->
+        <div
+            class="flex items-center justify-between px-5 py-4 border-b border-(--color-card-border) shrink-0 gap-4"
+        >
+            <div class="flex-1 min-w-0">
+                <h3 class="font-display text-2xl font-medium text-text leading-tight">
+                    {lang === "it" ? "Gusti Disponibili" : "Available Flavors"}
+                </h3>
+                <p class="text-[0.65rem] text-text/50 mt-1 flex items-center gap-1.5">
+                    <span style="display:inline-block;width:5px;height:5px;background:rgba(180,110,20,0.75);transform:rotate(45deg);flex-shrink:0;"></span>
+                    {lang === "it" ? "Disponibilità limitata — chiedi al banco" : "Limited availability — ask at the counter"}
+                </p>
+            </div>
+            <button
+                type="button"
+                onclick="closeFlavorsModal()"
+                class="shrink-0 w-9 h-9 flex items-center justify-center border border-(--color-card-border) text-text/60 hover:text-text hover:border-text/40 transition-colors rounded-sm"
+                aria-label={lang === "it" ? "Chiudi" : "Close"}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Contenuto scrollable -->
+        <div class="overflow-y-auto flex-1 px-5 py-5">
+            <!-- Contenitore gusti (riempito da JS) -->
+            <div id="flavors-content" class="flex flex-col gap-7"></div>
+        </div>
+
+        <!-- Footer modal -->
+        <div
+            class="shrink-0 px-5 py-3 border-t border-(--color-card-border) bg-(--color-menu-container)"
+        >
+            <p class="text-[0.7rem] text-text/40 text-center leading-relaxed">
+                {
+                    lang === "it"
+                        ? "I gusti possono variare in base alla disponibilità. Chiedi al banco."
+                        : "Flavors may vary depending on availability. Please ask at the counter."
+                }
+            </p>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -429,111 +516,263 @@ const getLocal = (itStr: string, enStr?: string) =>
         scroll-behavior: smooth;
     }
 
-    /* Active state for navigation pills */
-    .nav-pill.active {
-        background-color: var(--color-accent) !important;
-        color: white !important;
-        box-shadow: 0 4px 15px rgba(229, 116, 44, 0.3);
+    .nav-tab.active {
+        color: #000 !important;
+        font-weight: 600;
+    }
+    .nav-tab.active::after {
+        transform: scaleX(1) !important;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
+    /* ─── Slider marquee header ─── */
+    :global(.slide-track) {
+        display: flex;
+        height: 100%;
+        animation: slide-marquee 25s linear infinite;
+    }
+
+    @keyframes slide-marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
+    @media (hover: hover) and (pointer: fine) {
+        :global(.slide-track:hover) {
+            animation-play-state: paused;
+        }
+    }
+
+    /* ─── Griglia gusti responsive ─── */
+    :global(.flavors-grid) {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    @media (min-width: 480px) {
+        :global(.flavors-grid) {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+    }
+
+    /* Griglia gusti limitati: sempre 2 colonne da 360px su */
+    :global(.flavors-limited-grid) {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    @media (min-width: 360px) {
+        :global(.flavors-limited-grid) {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
     }
 </style>
 
 <script is:inline>
-    // Lightbox functions - made global for the inline onclick handlers
+    /* ── Lightbox ── */
     function openLightbox(imgSrc) {
         if (!imgSrc) return;
-
         const modal = document.getElementById("lightbox-modal");
         const img = document.getElementById("lightbox-img");
-
-        if (modal && img) {
-            img.src = imgSrc;
-            // Prevent body scrolling
-            document.body.style.overflow = "hidden";
-
-            // Make visible
-            modal.classList.remove("opacity-0", "pointer-events-none");
-
-            // Animate image scale
-            setTimeout(() => {
-                img.classList.remove("scale-95");
-                img.classList.add("scale-100");
-            }, 50);
-        }
+        if (!modal || !img) return;
+        img.src = imgSrc;
+        document.body.style.overflow = "hidden";
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        setTimeout(() => img.classList.replace("scale-95", "scale-100"), 50);
     }
 
     function closeLightbox() {
         const modal = document.getElementById("lightbox-modal");
         const img = document.getElementById("lightbox-img");
-
-        if (modal && img) {
-            // Re-enable body scroll
-            document.body.style.overflow = "";
-
-            // Scale down image
-            img.classList.remove("scale-100");
-            img.classList.add("scale-95");
-
-            // Fade out modal
-            modal.classList.add("opacity-0", "pointer-events-none");
-
-            // Optional: clear src after animation to save memory
-            setTimeout(() => {
-                img.src = "";
-            }, 300);
-        }
+        if (!modal || !img) return;
+        document.body.style.overflow = "";
+        img.classList.replace("scale-100", "scale-95");
+        modal.classList.add("opacity-0", "pointer-events-none");
+        setTimeout(() => {
+            img.src = "";
+        }, 300);
     }
 
-    // Close on Escape key
+    /* ── Flavors Modal ── */
+    // I dati dei gusti sono iniettati dal server nel data attribute del body
+    function openFlavorsModal() {
+        const modal = document.getElementById("flavors-modal");
+        const panel = document.getElementById("flavors-panel");
+        if (!modal || !panel) return;
+        document.body.style.overflow = "hidden";
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        setTimeout(() => {
+            panel.classList.remove("translate-y-4", "scale-95");
+        }, 20);
+    }
+
+    function closeFlavorsModal() {
+        const modal = document.getElementById("flavors-modal");
+        const panel = document.getElementById("flavors-panel");
+        if (!modal || !panel) return;
+        document.body.style.overflow = "";
+        panel.classList.add("translate-y-4", "scale-95");
+        setTimeout(
+            () => modal.classList.add("opacity-0", "pointer-events-none"),
+            250,
+        );
+    }
+
+    // Attacca tutti i listener del modal (backdrop chiude, panel no, bottoni aprono)
+    function setupFlavorsModalListeners() {
+        var modal = document.getElementById("flavors-modal");
+        var panel = document.getElementById("flavors-panel");
+        if (modal)
+            modal.addEventListener("click", function () {
+                closeFlavorsModal();
+            });
+        if (panel)
+            panel.addEventListener("click", function (e) {
+                e.stopPropagation();
+            });
+
+        // Bottoni "Gusti disponibili"
+        document.querySelectorAll(".flavors-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                var allData = window.__menuFlavors;
+                if (!allData) return;
+                var catId = btn.dataset.flavorsCategory;
+                var flavors = allData[catId || ""];
+                var lang = document.documentElement.lang === "en" ? "en" : "it";
+                if (flavors) {
+                    buildFlavorsContent(flavors, lang);
+                    openFlavorsModal();
+                }
+            });
+        });
+    }
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            setupFlavorsModalListeners,
+        );
+    } else {
+        setupFlavorsModalListeners();
+    }
+    document.addEventListener("astro:page-load", setupFlavorsModalListeners);
+
+    function buildFlavorsContent(flavors, lang) {
+        const container = document.getElementById("flavors-content");
+        if (!container) return;
+
+        const frutta = flavors.filter(
+            (f) => f.type === "frutta" && f.image,
+        );
+
+        const labelCrema = lang === "en" ? "Cream Flavors" : "Gusti di Crema";
+        const labelFrutta = lang === "en" ? "Fruit Flavors" : "Gusti di Frutta";
+
+        /* ── Card gusto standard ── */
+        function renderCard(f) {
+            const name = lang === "en" && f.nameEn ? f.nameEn : f.name;
+            const imgHtml = f.image
+                ? `<img src="${f.image}" alt="${name}" loading="lazy" style="width:56px;height:56px;object-fit:cover;flex-shrink:0;border-radius:3px;" />`
+                : `<div style="width:56px;height:56px;flex-shrink:0;background:var(--color-card-border);opacity:0.3;border-radius:3px;"></div>`;
+            
+            const limitedIndicator = f.limited 
+                ? `<span style="display:inline-block;width:6px;height:6px;background:currentColor;transform:rotate(45deg);margin-left:6px;vertical-align:middle;opacity:0.6;"></span>` 
+                : "";
+
+            return `<div style="display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0.75rem;border:1px solid var(--color-card-border);border-radius:4px;">
+                ${imgHtml}
+                <span style="font-size:0.85rem;font-weight:500;flex:1;line-height:1.3;">${name}${limitedIndicator}</span>
+            </div>`;
+        }
+
+        /* ── Sezione generica ── */
+        function renderGroup(label, items) {
+            if (!items.length) return "";
+            return `<div>
+                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.65rem;">
+                    <span style="display:block;height:1px;width:12px;background:currentColor;opacity:0.2;"></span>
+                    <p style="font-size:0.6rem;text-transform:uppercase;letter-spacing:0.2em;font-weight:700;opacity:0.4;">${label}</p>
+                </div>
+                <div class="flavors-grid">${items.map(renderCard).join("")}</div>
+            </div>`;
+        }
+
+        // Tutti i crema (inclusi i limitati), poi frutta
+        const cremaAll = flavors.filter((f) => f.type === "crema" && f.image);
+
+        container.innerHTML =
+            renderGroup(labelCrema, cremaAll) +
+            renderGroup(labelFrutta, frutta);
+    }
+
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
             closeLightbox();
+            // chiudi flavors modal direttamente (senza passare event)
+            const modal = document.getElementById("flavors-modal");
+            const panel = document.getElementById("flavors-panel");
+            if (!modal || !panel) return;
+            if (!modal.classList.contains("opacity-0")) {
+                document.body.style.overflow = "";
+                panel.classList.add("translate-y-4", "scale-95");
+                setTimeout(
+                    () =>
+                        modal.classList.add("opacity-0", "pointer-events-none"),
+                    250,
+                );
+            }
         }
     });
 </script>
 
 <script>
-    // Simple scrollspy for the top navigation
+    /* ── Scrollspy ── */
     document.addEventListener("astro:page-load", () => {
+        const navTabs =
+            document.querySelectorAll<HTMLElement>(".nav-tab");
+
+        function setActive(id: string) {
+            navTabs.forEach((tab) => tab.classList.remove("active"));
+            const activeLink = document.querySelector<HTMLElement>(
+                `.nav-tab[href="#${id}"]`,
+            );
+            if (activeLink) {
+                activeLink.classList.add("active");
+                activeLink.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "center",
+                });
+            }
+        }
+
+        // Trigger zone: dalla navbar fissa fino al 55% del viewport
         const observer = new IntersectionObserver(
             (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        // Remove active from all
-                        document
-                            .querySelectorAll(".nav-tab")
-                            .forEach((link) => {
-                                link.classList.remove(
-                                    "active",
-                                    "text-accent",
-                                    "after:scale-x-100",
-                                );
-                                if (
-                                    link.getAttribute("href") ===
-                                    `#${entry.target.id}`
-                                ) {
-                                    link.classList.add(
-                                        "active",
-                                        "text-accent",
-                                        "after:scale-x-100",
-                                    );
-                                    // Scroll the pill into view
-                                    link.scrollIntoView({
-                                        behavior: "smooth",
-                                        block: "nearest",
-                                        inline: "center",
-                                    });
-                                }
-                            });
-                    }
-                });
+                // Prendi solo le entry che stanno entrando nella zona
+                const visible = entries.filter((e) => e.isIntersecting);
+                if (visible.length === 0) return;
+                // Se più sezioni visibili, priorità a quella con ratio maggiore
+                const best = visible.reduce((a, b) =>
+                    a.intersectionRatio >= b.intersectionRatio ? a : b,
+                );
+                setActive(best.target.id);
             },
-            { threshold: 0.1, rootMargin: "-100px 0px -50% 0px" },
+            { threshold: [0, 0.1, 0.25], rootMargin: "-110px 0px -45% 0px" },
         );
 
         document
             .querySelectorAll(".menu-section-preview")
-            .forEach((section) => {
-                observer.observe(section);
-            });
+            .forEach((section) => observer.observe(section));
+
+        // Attiva la prima voce subito al caricamento
+        const first = document.querySelector<HTMLElement>(
+            ".menu-section-preview",
+        );
+        if (first) setActive(first.id);
     });
 </script>

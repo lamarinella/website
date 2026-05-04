@@ -2,15 +2,10 @@
 interface Props {
     lang: "it" | "en";
     forceDarkText?: boolean;
+    hideThemeToggle?: boolean;
 }
 
-const { lang, forceDarkText = false } = Astro.props;
-
-// Determine language toggle link
-const targetLink = lang === "it" ? "/en/menu" : "/menu";
-const targetLabel = lang === "it" ? "EN" : "IT";
-const currentFlag = lang === "it" ? "🇮🇹" : "🇬🇧";
-const targetFlag = lang === "it" ? "🇬🇧" : "🇮🇹";
+const { lang, forceDarkText = false, hideThemeToggle = false } = Astro.props;
 
 // Initial Text Color Classes
 const initialTextClass = forceDarkText
@@ -26,7 +21,7 @@ const initialLogo = forceDarkText
 
 <nav
     id="menu-navbar"
-    class="fixed top-0 left-0 right-0 z-1001 transition-transform duration-500 bg-transparent"
+    class="fixed top-0 left-0 right-0 z-1001 transition-transform duration-500 bg-(--color-menu-container)/95 backdrop-blur-xl border-b border-white/10"
     data-force-dark={forceDarkText ? "true" : "false"}
 >
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12 py-4 md:py-6">
@@ -50,7 +45,7 @@ const initialLogo = forceDarkText
                 <button
                     type="button"
                     id="theme-toggle"
-                    class={`w-9 h-9 transition-colors border bg-transparent cursor-pointer flex items-center justify-center rounded-none ${initialTextClass} ${initialBorderClass}`}
+                    class={`w-9 h-9 transition-colors border bg-transparent cursor-pointer flex items-center justify-center rounded-none ${initialTextClass} ${initialBorderClass} ${hideThemeToggle ? "hidden" : ""}`}
                     aria-label="Modalità"
                 >
                     <svg
@@ -173,10 +168,6 @@ const initialLogo = forceDarkText
 
         if (!navbar || !logo) return;
 
-        const forceDark = navbar.dataset.forceDark === "true";
-
-        let lastScrollY = window.scrollY;
-
         // ----- THEME LOGIC -----
         // Change the icons inside the button based on previous settings
         function updateThemeIcons() {
@@ -237,25 +228,11 @@ const initialLogo = forceDarkText
                 toggleDropdown(false);
             }
 
-            // Style changes based on scroll position - simplified and robust
+            // Add shadow on scroll
             if (scrolled) {
-                navbar.classList.add(
-                    "bg-(--color-menu-container)",
-                    "backdrop-blur-xl",
-                    "shadow-sm",
-                    "border-b",
-                    "border-(--color-card-border)",
-                );
-                navbar.classList.remove("bg-transparent");
+                navbar.classList.add("shadow-sm");
             } else {
-                navbar.classList.remove(
-                    "bg-(--color-menu-container)",
-                    "backdrop-blur-xl",
-                    "shadow-sm",
-                    "border-b",
-                    "border-(--color-card-border)",
-                );
-                navbar.classList.add("bg-transparent");
+                navbar.classList.remove("shadow-sm");
             }
 
             updateLogoBasedOnTheme();
@@ -301,7 +278,6 @@ const initialLogo = forceDarkText
                 });
             }
 
-            lastScrollY = currentScrollY;
         };
 
         updateNavbar();

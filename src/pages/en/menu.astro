@@ -1,19 +1,28 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import MenuLayout from "../../layouts/MenuLayout.astro";
 import MenuNavbar from "../../components/MenuNavbar.astro";
 import menuData from "../../data/menu.json";
 import MenuGrid from "../../components/MenuGrid.astro";
 
 const menuCategories = menuData.categories as any[];
+
+// Estrae i gusti per categoria e li passa al client via script inline
+const flavorsMap: Record<string, any[]> = {};
+for (const cat of menuCategories) {
+    if (cat.flavors) flavorsMap[cat.id] = cat.flavors;
+}
 ---
 
-<BaseLayout
+<MenuLayout
   title="Menu | La Marinella"
-  description="Our complete menu: gelato, cafeteria, hot foods, and aperitifs."
+  description="The complete La Marinella menu: cafeteria, pastries, sandwiches, beers, cocktails, wines, spirits, ice cream shop and rotisserie."
   lang="en"
-  showPrivacyManager={false}
 >
-  <MenuNavbar lang="en" forceDarkText={true} />
+  <!-- Dati gusti gelato per il modal (accessibili da JS client-side) -->
+  <script is:inline define:vars={{ flavorsMap }}>
+    window.__menuFlavors = flavorsMap;
+  </script>
 
+  <MenuNavbar lang="en" forceDarkText={false} hideThemeToggle={true} />
   <MenuGrid menuCategories={menuCategories} lang="en" />
-</BaseLayout>
+</MenuLayout>
