@@ -31,5 +31,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ./public_html/ # La cartella pubblica sul tuo hosting Serverplan
+          protocol: ftps
+          log-level: verbose
+          server-dir: ./public_html/
           local-dir: ./dist/ 
